@@ -55,10 +55,14 @@ Este documento descreve os User Stories criados a partir da Lista de Requisitos 
 |               |                                                                |
 | ------------- | :------------------------------------------------------------- |
 | **Descrição** | O sistema deve manter o cliente, podendo cadastrá-los e gerenciá-los e incluí-los como requerentes de pedidos. Um usuário tem os atributos nome, endereço e email. |
+
 | **Requisitos envolvidos** |                                                    |
 | ------------- | :------------------------------------------------------------- |
 | RF01          | Manter Cliente | 
 | RF06          | Relatórios de Cliente |
+
+|                           |                                     |
+| ------------------------- | ----------------------------------- | 
 | **Prioridade** | Essencial |
 | **Estimativa** | 5h |
 | **Tempo Gasto (real):**   |                                     | 
@@ -80,11 +84,15 @@ Este documento descreve os User Stories criados a partir da Lista de Requisitos 
 |               |                                                                |
 | ------------- | :------------------------------------------------------------- |
 | **Descrição** | O sistema deve manter um mecanismo de controle do estoque de materiais disponíveis, cuja entrada pode ser registrada por um funcionário e que possui saída automática de acordo com os produtos em um pedido realizado. Um material tem os atributos código, descrição e quantidade em estoque. |
+
 | **Requisitos envolvidos** |                                                    |
 | ------------- | :------------------------------------------------------------- | 
 |RF03           | Manter Material | 
 |RF04           | Manter Pedido | 
 |RF08           | Relatórios de Material | 
+
+|                           |                                     |
+| ------------------------- | ----------------------------------- | 
 | **Prioridade** | Essencial |
 | **Estimativa** | 8h | 
 | **Tempo Gasto (real):**   |                                     | 
@@ -108,10 +116,14 @@ Este documento descreve os User Stories criados a partir da Lista de Requisitos 
 |               |                                                                |
 | ------------- | :------------------------------------------------------------- |
 | **Descrição** | O sistema deve manter funcionários, podendo cadastrá-los e gerenciá-los. Os funcionários têm acesso ao sistema via login e senha. Um usuário tem os atributos nome, endereço, email e senha. O email será o login e ele pode registrar-se diretamente no sistema e aguardar ativação da conta pela administrador. |
+
 | **Requisitos envolvidos** |
 | ------------- | :------------------------------------------------------------- | 
 |RF02           | Manter Funcionário |
 |RF07           | Relatórios de Funcionário | 
+
+|                           |                                     |
+| ------------------------- | ----------------------------------- | 
 | **Prioridade** | Essencial |
 | **Estimativa** | 5h | 
 | **Tempo Gasto (real):**   |                                     | 
