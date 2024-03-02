@@ -117,7 +117,7 @@ Este documento descreve os User Stories criados a partir da Lista de Requisitos 
 | ------------- | :------------------------------------------------------------- |
 | **Descrição** | O sistema deve manter funcionários, podendo cadastrá-los e gerenciá-los. Os funcionários têm acesso ao sistema via login e senha. Um usuário tem os atributos nome, endereço, email e senha. O email será o login e ele pode registrar-se diretamente no sistema e aguardar ativação da conta pela administrador. |
 
-| **Requisitos envolvidos** |
+| **Requisitos envolvidos** |                                                    |
 | ------------- | :------------------------------------------------------------- | 
 |RF02           | Manter Funcionário |
 |RF07           | Relatórios de Funcionário | 
