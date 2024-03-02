@@ -45,6 +45,8 @@ RF09 - Relatórios de Pedido | É o mais importante do sistema, pois será funda
 
 ## Lista de Requisitos Não Funcionais
 
+Requisito                                 | Descrição   |
+---------                                 | ----------- |
 RNF01 - Desenvolvimento de uma interface amigável e intuitiva | Devido ao baixo nível de experiência com tecnologia por parte dos funcionários, é de considerável importância que a interface do sistema possua funcionalidades fáceis de aprender e utilizar. |
 RNF02 - O sistema deve exigir poucos recursos do hardware | Acesso a máquinas mais potentes é um investimento inviável. Por isso, é importante que o sistema não exija uma grande quantidade de processamento, armazenamento e memória. A escolha de uma linguagem de programação mais rápida e eficiente deve ser levada em consideração. |
 
