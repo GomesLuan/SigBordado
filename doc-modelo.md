@@ -77,4 +77,15 @@
       double quantEst
    }
 
+   Cliente }| -- || Endereco: tem
+   Funcionario }| -- || Endereco: tem
+   Funcionario || --|{ Pedido: responsavel
+   Pedido }| -- || Cliente: pediu
+   Pedido || -- |{ PedidoProduto: pedidoProduto-pedido
+   Pedido || -- |{ Pagamento: pagamento
+   Pagamento }| -- || FormaPagamento: formaPagamento
+   PedidoProduto }| -- || Produto: pedidoProduto-produto
+   MaterialProduto }| -- ||Produto: MaterialProduto-produto
+   Material || -- |{ MaterialProduto: MaterialProduto-material
+
 ```
