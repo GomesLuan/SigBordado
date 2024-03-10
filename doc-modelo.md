@@ -9,24 +9,18 @@
         string cpfcnpj
         string email
         string telefone
-        Endereco endereco
+        string endereco
     }
-
-   Endereco {
-      int cod PK
-      string cidade
-      string bairro
-      string numero
-   }
 
    Funcionario {
       int cod PK
       string nome
       string cpf
+      string senha
       string rg
       string email
       string telefone
-      Endereco endereco
+      string endereco
    }
 
    Pedido {
@@ -39,23 +33,13 @@
       string status
       double valorAdicional
       double desconto
-      Pagamento pagamento
-   }
-
-   Pagamento {
-      int cod PK
-      double valor
-      formaPag FormaPagamento
-   }
-
-   FormaPagamento {
-      int cod PK
-      string nome
+      string formaDePagamento
    }
 
    PedidoProduto {
       Pedido pedido
       Produto produto
+      int quantidade
    }
 
    Produto {
@@ -77,13 +61,10 @@
       double quantEst
    }
 
-   Cliente }| -- || Endereco: tem
-   Funcionario }| -- || Endereco: tem
+
    Funcionario || --|{ Pedido: responsavel
    Pedido }| -- || Cliente: pediu
    Pedido || -- |{ PedidoProduto: pedidoProduto-pedido
-   Pedido || -- |{ Pagamento: pagamento
-   Pagamento }| -- || FormaPagamento: formaPagamento
    PedidoProduto }| -- || Produto: pedidoProduto-produto
    MaterialProduto }| -- ||Produto: MaterialProduto-produto
    Material || -- |{ MaterialProduto: MaterialProduto-material
