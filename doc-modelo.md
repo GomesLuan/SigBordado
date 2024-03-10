@@ -89,3 +89,10 @@
    Material || -- |{ MaterialProduto: MaterialProduto-material
 
 ```
+### Legenda:
+
+Pk = chave primária
+
+|| = 1 e somente 1
+
+}| = 1 ou muitos
