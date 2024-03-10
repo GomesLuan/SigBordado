@@ -143,14 +143,15 @@ Este documento descreve os User Stories criados a partir da Lista de Requisitos 
 
 
 
-### User Story US05 - Manter Pedido
+### User Story US05 - Manter Produto
 |               |                                                                |
 | ------------- | :------------------------------------------------------------- |
 | **Descrição** | O sistema deve manter produtos, podendo cadastrá-los e gerenciá-los. Um produto tem os atributos nome, endereço, email e senha.  |
 
 | **Requisitos envolvidos** |                                                    |
 | ------------- | :------------------------------------------------------------- | 
-|RF0X           | |
+|RF10           | Manter Produto |
+|RF11           | Relatórios de Produto | 
 
 |                           |                                     |
 | ------------------------- | ----------------------------------- | 
