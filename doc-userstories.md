@@ -143,3 +143,36 @@ Este documento descreve os User Stories criados a partir da Lista de Requisitos 
 
 
 
+### User Story US05 - Manter Pedido
+|               |                                                                |
+| ------------- | :------------------------------------------------------------- |
+| **Descrição** | O sistema deve manter produtos, podendo cadastrá-los e gerenciá-los. Um produto tem os atributos nome, endereço, email e senha.  |
+
+| **Requisitos envolvidos** |                                                    |
+| ------------- | :------------------------------------------------------------- | 
+|RF0X           | |
+
+|                           |                                     |
+| ------------------------- | ----------------------------------- | 
+| **Prioridade** | Essencial |
+| **Estimativa** | 5h | 
+| **Tempo Gasto (real):**   |                                     | 
+| **Tamanho Funcional** | 8 PF (pontos de função) |
+| **Analista**| Pedro (responsável por especificar/detalhar o US). |
+| **Desenvolvedor** | Luan (responsável por implementar e realizar testes de unidade e testes de integração). |
+| **Revisor** | Charles (responsável por implementar e realizar testes de unidade e testes de integração). |
+| **Testador** | Victor (responsável por avaliar a implementação e executar os testes de unidade e testes de integração). |
+
+| Testes de Aceitação (TA) |  |
+| ----------- | --------- |
+| **Código**      | **Descrição** |
+| **TA05.01** | O administrador informa, na tela Incluir Produto, todos os dados para registrar o produto corretamente, ao clicar em Salvar ele é notificado com uma mensagem de sucesso. Mensagem: Produto cadastrado com sucesso. |
+| **TA05.02** | O administrador informa, na tela Incluir Produto, os dados para registrar o produto incorretamente, ao clicar em Salvar ele é notificado com uma mensagem de erro. Mensagem: Produto não cadastrado, o campo “xxxx” não foi informado corretamente. |
+| **TA05.03** | O usuário informa, na tela Consulta Produto, os dados para pesquisar corretamente, ao clicar em Consultar ele é notificado com uma mensagem de erro. Mensagem: Produto inexistente. |
+| **TA05.04**| O usuário informa, na tela Consulta Produto, os dados para pesquisar corretamente, ao clicar em Consultar ele é encaminhado para a tela com as informações do produto. É exibida a mensagem: Produto Existente. |
+| **TA05.05**| O administrador informa, na tela Alterar Produto, todos os dados para alterar o produto corretamente, ao clicar em Salvar ele é notificado com uma mensagem de sucesso. Mensagem: Produto alterado com sucesso. |
+| **TA05.06**| O administrador informa, na tela Alterar Produto, os dados para alterar o produto incorretamente, ao clicar em Salvar ele é notificado com uma mensagem de erro. Mensagem: Produto não alterado, o campo “xxxx” não foi informado corretamente. |
+| **TA05.07**| O administrador informa, na tela Deletar Produto, os dados para excluir corretamente, ao clicar em Deletar ele é encaminhado para a tela principal. É exibida a mensagem: Produto Deletado. |
+
+
+
