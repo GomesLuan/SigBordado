@@ -11,10 +11,10 @@ Este documento descreve os User Stories criados a partir da Lista de Requisitos 
 | Data       | Versão  | Descrição                          | Autor                          |
 | :--------- | :-----: | :--------------------------------: | :----------------------------- |
 | 04/12/2023 | 1.0     | Documento inicial | Todos |
-| 04/12/2023 | 1.1     | User Story US03 | Luan |
+| 04/12/2023 | 1.1     | User Story US03 | Gabriel W. |
 | 05/12/2023 | 1.2     | User Story US04 | Victor |
 | 05/12/2023 | 1.3     | User Story US03 | Pedro |
-| 05/12/2023 | 1.4     | User Story US04 | Charles |
+| 05/12/2023 | 1.4     | User Story US04 | Luan |
 
 
 
@@ -68,8 +68,8 @@ Este documento descreve os User Stories criados a partir da Lista de Requisitos 
 | **Tempo Gasto (real):**   |                                     | 
 | **Tamanho Funcional** | 8 PF (pontos de função) |
 | **Analista**| Pedro (responsável por especificar/detalhar o US). |
-| **Desenvolvedor** | Luan (responsável por implementar e realizar testes de unidade e testes de integração). |
-| **Revisor** | Charles (responsável por implementar e realizar testes de unidade e testes de integração). |
+| **Desenvolvedor** | Gabriel W. (responsável por implementar e realizar testes de unidade e testes de integração). |
+| **Revisor** | Luan (responsável por implementar e realizar testes de unidade e testes de integração). |
 | **Testador** | Victor (responsável por avaliar a implementação e executar os testes de unidade e testes de integração). |
 
 | Testes de Aceitação (TA) |  |
@@ -98,8 +98,8 @@ Este documento descreve os User Stories criados a partir da Lista de Requisitos 
 | **Tempo Gasto (real):**   |                                     | 
 | **Tamanho Funcional** | 8 PF (pontos de função) |
 | **Analista**| Pedro (responsável por especificar/detalhar o US). |
-| **Desenvolvedor** | Luan (responsável por implementar e realizar testes de unidade e testes de integração). |
-| **Revisor** | Charles (responsável por implementar e realizar testes de unidade e testes de integração). |
+| **Desenvolvedor** | Gabriel W. (responsável por implementar e realizar testes de unidade e testes de integração). |
+| **Revisor** | Luan (responsável por implementar e realizar testes de unidade e testes de integração). |
 | **Testador** | Victor (responsável por avaliar a implementação e executar os testes de unidade e testes de integração). |
 
 | Testes de Aceitação (TA) |  |
