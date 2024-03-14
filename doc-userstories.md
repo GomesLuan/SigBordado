@@ -129,8 +129,8 @@ Este documento descreve os User Stories criados a partir da Lista de Requisitos 
 | **Tempo Gasto (real):**   |                                     | 
 | **Tamanho Funcional** | 8 PF (pontos de função) |
 | **Analista**| Pedro (responsável por especificar/detalhar o US). |
-| **Desenvolvedor** | Luan (responsável por implementar e realizar testes de unidade e testes de integração). |
-| **Revisor** | Charles (responsável por implementar e realizar testes de unidade e testes de integração). |
+| **Desenvolvedor** | Gabriel W. (responsável por implementar e realizar testes de unidade e testes de integração). |
+| **Revisor** | Luan (responsável por implementar e realizar testes de unidade e testes de integração). |
 | **Testador** | Victor (responsável por avaliar a implementação e executar os testes de unidade e testes de integração). |
 
 | Testes de Aceitação (TA) |  |
