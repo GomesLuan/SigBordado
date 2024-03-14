@@ -7,8 +7,8 @@ Documento construído a partir do **Documento de Visao** que pode ser encontrado
 
 Membro     |     Papel   |   E-mail   |
 ---------  | ----------- | ---------- |
-Charles    | Gerente     | charles.araujo.701@ufrn.edu.br |
-Luan       | Desenvolvedor| luan.gomes.706@ufrn.edu.br |
+Luan       | Gerente     | luan.gomes.706@ufrn.edu.br |
+Gabriel W. | Desenvolvedor| gabriel.santos.710@ufrn.edu.br |
 Pedro      | Cliente      | pedro.ribeiro.121@ufrn.edu.br |
 Victor     | Testador     | ryan.silva.706@ufrn.edu.br |
 
@@ -17,8 +17,8 @@ Victor     | Testador     | ryan.silva.706@ufrn.edu.br |
 
 Membro     | Competências |
 ---------  | ----------- |
-Charles |Desenvolvedor Java, Spring Boot, Hibernate, Eclipse, Latex, etc |
-Luan | Desenvolvedor Python, Flutter, C |
+Luan |Desenvolvedor Python, Flutter, C |
+Gabriel w. | Desenvolvedor Python, Flutter, C, Express.js, Node.js, React.js, EJS, MySQL, etc |
 Pedro | Desenvolvedor Python, Java, C |
 Victor | Desenvolvedor Flutter, Python, C, Visual Code |
 

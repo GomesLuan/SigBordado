@@ -11,10 +11,10 @@ Este documento descreve os User Stories criados a partir da Lista de Requisitos 
 | Data       | Versão  | Descrição                          | Autor                          |
 | :--------- | :-----: | :--------------------------------: | :----------------------------- |
 | 04/12/2023 | 1.0     | Documento inicial | Todos |
-| 04/12/2023 | 1.1     | User Story US03 | Luan |
+| 04/12/2023 | 1.1     | User Story US03 | Gabriel W. |
 | 05/12/2023 | 1.2     | User Story US04 | Victor |
 | 05/12/2023 | 1.3     | User Story US03 | Pedro |
-| 05/12/2023 | 1.4     | User Story US04 | Charles |
+| 05/12/2023 | 1.4     | User Story US04 | Luan |
 
 
 
@@ -38,9 +38,9 @@ Este documento descreve os User Stories criados a partir da Lista de Requisitos 
 | **Tempo Gasto (real):**   |                                     | 
 | **Tamanho Funcional** | 8 PF (pontos de função) |
 | **Analista**| Pedro (responsável por especificar/detalhar o US). |
-| **Desenvolvedor** | Luan (responsável por implementar e realizar testes de unidade e testes de integração). |
-| **Revisor** | Charles (responsável por implementar e realizar testes de unidade e testes de integração). |
-| **Testador** | Victor (responsável por avaliar a implementação e executar os testes de unidade e testes de integração). |
+| **Desenvolvedor** | Gabriel W. (responsável por implementar e realizar testes de unidade e testes de integração). |
+| **Revisor** | Luan (responsável por avaliar a implementação e executar os testes de unidade e testes de integração). |
+| **Testador** | Victor (responsável por executar os testes de aceitação e fazer o relatório de testes). |
 
 | Testes de Aceitação (TA) |  |
 | ----------- | --------- |
@@ -54,7 +54,7 @@ Este documento descreve os User Stories criados a partir da Lista de Requisitos 
 ### User Story US02 - Manter Cliente
 |               |                                                                |
 | ------------- | :------------------------------------------------------------- |
-| **Descrição** | O sistema deve manter o cliente, podendo cadastrá-los e gerenciá-los e incluí-los como requerentes de pedidos. Um usuário tem os atributos nome, endereço e email. |
+| **Descrição** | O sistema deve manter o cliente, podendo cadastrá-los e gerenciá-los e incluí-los como requerentes de pedidos. Um usuário tem os atributos codigo, nome, endereço, cpf ou cnpj, telefone e email. |
 
 | **Requisitos envolvidos** |                                                    |
 | ------------- | :------------------------------------------------------------- |
@@ -68,9 +68,9 @@ Este documento descreve os User Stories criados a partir da Lista de Requisitos 
 | **Tempo Gasto (real):**   |                                     | 
 | **Tamanho Funcional** | 8 PF (pontos de função) |
 | **Analista**| Pedro (responsável por especificar/detalhar o US). |
-| **Desenvolvedor** | Luan (responsável por implementar e realizar testes de unidade e testes de integração). |
-| **Revisor** | Charles (responsável por implementar e realizar testes de unidade e testes de integração). |
-| **Testador** | Victor (responsável por avaliar a implementação e executar os testes de unidade e testes de integração). |
+| **Desenvolvedor** | Gabriel W. (responsável por implementar e realizar testes de unidade e testes de integração). |
+| **Revisor** | Luan (responsável por avaliar a implementação e executar os testes de unidade e testes de integração). |
+| **Testador** | Victor (responsável por executar os testes de aceitação e fazer o relatório de testes). |
 
 | Testes de Aceitação (TA) |  |
 | ----------- | --------- |
@@ -98,9 +98,9 @@ Este documento descreve os User Stories criados a partir da Lista de Requisitos 
 | **Tempo Gasto (real):**   |                                     | 
 | **Tamanho Funcional** | 8 PF (pontos de função) |
 | **Analista**| Pedro (responsável por especificar/detalhar o US). |
-| **Desenvolvedor** | Luan (responsável por implementar e realizar testes de unidade e testes de integração). |
-| **Revisor** | Charles (responsável por implementar e realizar testes de unidade e testes de integração). |
-| **Testador** | Victor (responsável por avaliar a implementação e executar os testes de unidade e testes de integração). |
+| **Desenvolvedor** | Gabriel W. (responsável por implementar e realizar testes de unidade e testes de integração). |
+| **Revisor** | Luan (responsável por avaliar a implementação e executar os testes de unidade e testes de integração). |
+| **Testador** | Victor (responsável por executar os testes de aceitação e fazer o relatório de testes). |
 
 | Testes de Aceitação (TA) |  |
 | ----------- | --------- |
@@ -115,7 +115,7 @@ Este documento descreve os User Stories criados a partir da Lista de Requisitos 
 ### User Story US04 - Manter Funcionário
 |               |                                                                |
 | ------------- | :------------------------------------------------------------- |
-| **Descrição** | O sistema deve manter funcionários, podendo cadastrá-los e gerenciá-los. Os funcionários têm acesso ao sistema via login e senha. Um usuário tem os atributos nome, endereço, email e senha. O email será o login e ele pode registrar-se diretamente no sistema e aguardar ativação da conta pela administrador. |
+| **Descrição** | O sistema deve manter funcionários, podendo cadastrá-los e gerenciá-los. Os funcionários têm acesso ao sistema via login e senha. Um usuário tem os atributos codigo, nome, endereço, email, senha, cpf, rg, e telefone. O email será o login e ele pode registrar-se diretamente no sistema e aguardar ativação da conta pela administrador. |
 
 | **Requisitos envolvidos** |                                                    |
 | ------------- | :------------------------------------------------------------- | 
@@ -129,9 +129,9 @@ Este documento descreve os User Stories criados a partir da Lista de Requisitos 
 | **Tempo Gasto (real):**   |                                     | 
 | **Tamanho Funcional** | 8 PF (pontos de função) |
 | **Analista**| Pedro (responsável por especificar/detalhar o US). |
-| **Desenvolvedor** | Luan (responsável por implementar e realizar testes de unidade e testes de integração). |
-| **Revisor** | Charles (responsável por implementar e realizar testes de unidade e testes de integração). |
-| **Testador** | Victor (responsável por avaliar a implementação e executar os testes de unidade e testes de integração). |
+| **Desenvolvedor** | Gabriel W. (responsável por implementar e realizar testes de unidade e testes de integração). |
+| **Revisor** | Luan (responsável por avaliar a implementação e executar os testes de unidade e testes de integração). |
+| **Testador** | Victor (responsável por executar os testes de aceitação e fazer o relatório de testes). |
 
 | Testes de Aceitação (TA) |  |
 | ----------- | --------- |
@@ -146,7 +146,7 @@ Este documento descreve os User Stories criados a partir da Lista de Requisitos 
 ### User Story US05 - Manter Produto
 |               |                                                                |
 | ------------- | :------------------------------------------------------------- |
-| **Descrição** | O sistema deve manter produtos, podendo cadastrá-los e gerenciá-los. Um produto tem os atributos nome, endereço, email e senha.  |
+| **Descrição** | O sistema deve manter produtos, podendo cadastrá-los e gerenciá-los. Um produto tem os atributos codigo, valor e descrição.  |
 
 | **Requisitos envolvidos** |                                                    |
 | ------------- | :------------------------------------------------------------- | 
@@ -160,9 +160,9 @@ Este documento descreve os User Stories criados a partir da Lista de Requisitos 
 | **Tempo Gasto (real):**   |                                     | 
 | **Tamanho Funcional** | 8 PF (pontos de função) |
 | **Analista**| Pedro (responsável por especificar/detalhar o US). |
-| **Desenvolvedor** | Luan (responsável por implementar e realizar testes de unidade e testes de integração). |
-| **Revisor** | Charles (responsável por implementar e realizar testes de unidade e testes de integração). |
-| **Testador** | Victor (responsável por avaliar a implementação e executar os testes de unidade e testes de integração). |
+| **Desenvolvedor** | Gabriel W. (responsável por implementar e realizar testes de unidade e testes de integração). |
+| **Revisor** | Luan (responsável por avaliar a implementação e executar os testes de unidade e testes de integração). |
+| **Testador** | Victor (responsável por executar os testes de aceitação e fazer o relatório de testes). |
 
 | Testes de Aceitação (TA) |  |
 | ----------- | --------- |
