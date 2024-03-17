@@ -174,6 +174,3 @@ Este documento descreve os User Stories criados a partir da Lista de Requisitos 
 | **TA05.05**| O administrador informa, na tela Alterar Produto, todos os dados para alterar o produto corretamente, ao clicar em Salvar ele é notificado com uma mensagem de sucesso. Mensagem: Produto alterado com sucesso. |
 | **TA05.06**| O administrador informa, na tela Alterar Produto, os dados para alterar o produto incorretamente, ao clicar em Salvar ele é notificado com uma mensagem de erro. Mensagem: Produto não alterado, o campo “xxxx” não foi informado corretamente. |
 | **TA05.07**| O administrador informa, na tela Deletar Produto, os dados para excluir corretamente, ao clicar em Deletar ele é encaminhado para a tela principal. É exibida a mensagem: Produto Deletado. |
-
-
-

@@ -42,8 +42,6 @@ RF06 - Relatórios de Cliente | O acesso a relatórios de clientes pode se prova
 RF07 - Relatórios de Funcionário | Um relatório útil para monitorar a carga de pedidos dos funcionários. | Gerente |
 RF08 - Relatórios de Material | Relatórios detalhados com as informações dos materiais utilizados para os bordados. São essenciais para o controle de estoque e garantir que os pedidos poderão ser entregues dentro do prazo. | Gerente |
 RF09 - Relatórios de Pedido | É o mais importante do sistema, pois será fundamental para a gestão das demandas. Com esta funcionalidade, o bordadeiro poderá ver todas as demandas e suas informações. | Gerente |
-RF10 - Manter Produto | Um produto tem valor, descrição e material. | Gerente |
-RF11 - Relatórios de Produto | Relatórios com as informações dos produtos disponiveis. São úteis para realizar pedidos. | Gerente |
 
 ## Lista de Requisitos Não Funcionais
 
