@@ -142,6 +142,16 @@
 
 |  Nome           | Descrição                         | Tipo de Dado | Tamanho | Restrições de Domínio |
 | --------------- | --------------------------------- | ------------ | ------- | --------------------- |
-| cod_pedido      | código do pedido relacionado      | SERIAL       | ---     | PK / FK |
-| cod_produto     | código do produto relacionado     | SERIAL       | ---     | PK / FK |
+| codPedido       | código do pedido relacionado      | SERIAL       | ---     | PK / FK |
+| codProduto      | código do produto relacionado     | SERIAL       | ---     | PK / FK |
 | quantidade      | quantidade de produtos no item    | INTEGER      | ---     | Not Null |
+
+|   Tabela   | MaterialProduto |
+| ---------- | ------------- |
+| Descrição  | Armazena as informações de um material utilizado em um produto |
+
+|  Nome           | Descrição                                          | Tipo de Dado | Tamanho | Restrições de Domínio |
+| --------------- | -------------------------------------------------- | ------------ | ------- | --------------------- |
+| codProduto      | código do produto relacionado                      | SERIAL       | ---     | PK / FK |
+| codMaterial     | código do material relacionado                     | SERIAL       | ---     | PK / FK |
+| quantUsa        | quantidade do material utilizada para o produto    | REAL         | ---     | Not Null |
