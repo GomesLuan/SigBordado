@@ -1,4 +1,4 @@
-## Modelo conceitual
+## Modelo de dados
 
 ```mermaid
     erDiagram
@@ -70,10 +70,17 @@
    Material || -- |{ MaterialProduto: MaterialProduto-material
 
 ```
-### Legenda:
+### Dicionário de Dados:
 
-Pk = chave primária
+|   Tabela   | Cliente |
+| ---------- | ----------- |
+| Descrição  | Armazena as informações de um cliente. |
 
-|| = 1 e somente 1
-
-}| = 1 ou muitos
+|  Nome         | Descrição                        | Tipo de Dado | Tamanho | Restrições de Domínio |
+| ------------- | -------------------------------- | ------------ | ------- | --------------------- |
+| cod           | identificador gerado pelo SGBD   | SERIAL       | ---     | PK / Identity |
+| nome          | nome do cliente                  | VARCHAR      | 150     | Not Null |
+| cpfCnpj       | CPF ou CNPJ do cliente           | VARCHAR      | 14      | Unique / Not Null |
+| email         | e-mail para contato do cliente   | VARCHAR      | 150     | --- |
+| telefone      | telefone para contato do cliente | VARCHAR      | 20      | --- |
+| endereco      | endereço do cliente              | VARCHAR      | 250     | --- |
