@@ -1,4 +1,4 @@
-## Modelo de dados
+# Modelo de dados
 
 ```mermaid
     erDiagram
@@ -70,7 +70,7 @@
    Material || -- |{ MaterialProduto: MaterialProduto-material
 
 ```
-### Dicionário de Dados:
+## Dicionário de Dados:
 
 |   Tabela   | Cliente |
 | ---------- | ----------- |
@@ -125,3 +125,13 @@
 | cod           | identificador gerado pelo SGBD       | SERIAL       | ---     | PK / Identity |
 | valor         | valor unitário do produto            | REAL         | ---     | Not Null |
 | descricao     | descrição do produto                 | VARCHAR      | 250     | Not Null |
+
+|   Tabela   | Material    |
+| ---------- | ----------- |
+| Descrição  | Armazena as informações de um Material. |
+
+|  Nome           | Descrição                         | Tipo de Dado | Tamanho | Restrições de Domínio |
+| --------------- | --------------------------------- | ------------ | ------- | --------------------- |
+| cod             | identificador gerado pelo SGBD    | SERIAL       | ---     | PK / Identity |
+| descricao       | descrição do material             | VARCHAR      | 250     | Not Null      |
+| quantEst        | quantidade do material em estoque | REAL         | ---     | Not Null      |
