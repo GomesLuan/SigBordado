@@ -84,3 +84,18 @@
 | email         | e-mail para contato do cliente   | VARCHAR      | 150     | --- |
 | telefone      | telefone para contato do cliente | VARCHAR      | 20      | --- |
 | endereco      | endereço do cliente              | VARCHAR      | 250     | --- |
+
+|   Tabela   | Funcionario |
+| ---------- | ----------- |
+| Descrição  | Armazena as informações de um funcionário. |
+
+|  Nome         | Descrição                        | Tipo de Dado | Tamanho | Restrições de Domínio |
+| ------------- | -------------------------------- | ------------ | ------- | --------------------- |
+| cod           | identificador gerado pelo SGBD   | SERIAL       | ---     | PK / Identity |
+| nome          | nome do funcionário              | VARCHAR      | 150     | Not Null |
+| cpf           | CPF do funcionário, utilizado para login | CHAR | 11      | Unique / Not Null |
+| senha         | senha utilizada para logar no sistema | VARCHAR | 50      | Unique / Not Null |
+| rg            | RG do funcionário                | CHAR         | 10      | Unique / Not Null |
+| email         | e-mail do funcionário            | VARCHAR      | 150     | --- |
+| telefone      | telefone do funcionário          | VARCHAR      | 20      | --- |
+| endereco      | endereço do funcionário          | VARCHAR      | 250     | --- |
