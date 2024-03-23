@@ -3,11 +3,11 @@
 ```mermaid
 erDiagram
    Funcionario || --|{ Pedido: responsavel
-   Pedido }| -- || Cliente: pediu
-   Pedido || -- |{ PedidoProduto: pedidoProduto-pedido
-   PedidoProduto }| -- || Produto: pedidoProduto-produto
-   MaterialProduto }| -- ||Produto: MaterialProduto-produto
-   Material || -- |{ MaterialProduto: MaterialProduto-material
+   Pedido }| -- || Cliente: pede
+   Pedido || -- |{ PedidoProduto: tem
+   PedidoProduto }| -- || Produto: participa
+   MaterialProduto }| -- ||Produto: tem
+   Material || -- |{ MaterialProduto: participa
 
 ```
 ## Dicionário de Dados:
