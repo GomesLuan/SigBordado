@@ -135,3 +135,13 @@
 | cod             | identificador gerado pelo SGBD    | SERIAL       | ---     | PK / Identity |
 | descricao       | descrição do material             | VARCHAR      | 250     | Not Null      |
 | quantEst        | quantidade do material em estoque | REAL         | ---     | Not Null      |
+
+|   Tabela   | PedidoProduto |
+| ---------- | ------------- |
+| Descrição  | Armazena as informações de um item de um pedido |
+
+|  Nome           | Descrição                         | Tipo de Dado | Tamanho | Restrições de Domínio |
+| --------------- | --------------------------------- | ------------ | ------- | --------------------- |
+| cod_pedido      | código do pedido relacionado      | SERIAL       | ---     | PK / FK |
+| cod_produto     | código do produto relacionado     | SERIAL       | ---     | PK / FK |
+| quantidade      | quantidade de produtos no item    | INTEGER      | ---     | Not Null |
