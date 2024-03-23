@@ -116,3 +116,12 @@
 | desconto        | Percentual de desconto para o pedido                               | REAL         | ---     | Not Null |
 | formaPagamento  | Forma de pagamento utilizada para o pedido                         | VARCHAR      | 100     | Not Null |
 
+|   Tabela   | Produto     |
+| ---------- | ----------- |
+| Descrição  | Armazena as informações de um produto. |
+
+|  Nome         | Descrição                            | Tipo de Dado | Tamanho | Restrições de Domínio |
+| --------------| -------------------------------------| ------------ | ------- | --------------------- |
+| cod           | identificador gerado pelo SGBD       | SERIAL       | ---     | PK / Identity |
+| valor         | valor unitário do produto            | REAL         | ---     | Not Null |
+| descricao     | descrição do produto                 | VARCHAR      | 250     | Not Null |
