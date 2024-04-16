@@ -15,6 +15,7 @@ Este documento descreve os User Stories criados a partir da Lista de Requisitos 
 | 05/12/2023 | 1.2     | User Story US04 | Victor |
 | 05/12/2023 | 1.3     | User Story US03 | Pedro |
 | 05/12/2023 | 1.4     | User Story US04 | Luan |
+| 16/04/2024 | 1.5     | Mudança dos PF  | Victor |
 
 
 
@@ -36,7 +37,7 @@ Este documento descreve os User Stories criados a partir da Lista de Requisitos 
 | **Prioridade** | Essencial |
 | **Estimativa** | 20h |
 | **Tempo Gasto (real):**   |                                     | 
-| **Tamanho Funcional** | 8 PF (pontos de função) |
+| **Tamanho Funcional** | 35 PF (pontos de função) |
 | **Analista**| Pedro (responsável por especificar/detalhar o US). |
 | **Desenvolvedor** | Gabriel W. (responsável por implementar e realizar testes de unidade e testes de integração). |
 | **Revisor** | Luan (responsável por avaliar a implementação e executar os testes de unidade e testes de integração). |
@@ -66,7 +67,7 @@ Este documento descreve os User Stories criados a partir da Lista de Requisitos 
 | **Prioridade** | Essencial |
 | **Estimativa** | 5h |
 | **Tempo Gasto (real):**   |                                     | 
-| **Tamanho Funcional** | 8 PF (pontos de função) |
+| **Tamanho Funcional** | 35 PF (pontos de função) |
 | **Analista**| Pedro (responsável por especificar/detalhar o US). |
 | **Desenvolvedor** | Gabriel W. (responsável por implementar e realizar testes de unidade e testes de integração). |
 | **Revisor** | Luan (responsável por avaliar a implementação e executar os testes de unidade e testes de integração). |
@@ -96,7 +97,7 @@ Este documento descreve os User Stories criados a partir da Lista de Requisitos 
 | **Prioridade** | Essencial |
 | **Estimativa** | 8h | 
 | **Tempo Gasto (real):**   |                                     | 
-| **Tamanho Funcional** | 8 PF (pontos de função) |
+| **Tamanho Funcional** | 35 PF (pontos de função) |
 | **Analista**| Pedro (responsável por especificar/detalhar o US). |
 | **Desenvolvedor** | Gabriel W. (responsável por implementar e realizar testes de unidade e testes de integração). |
 | **Revisor** | Luan (responsável por avaliar a implementação e executar os testes de unidade e testes de integração). |
@@ -127,7 +128,7 @@ Este documento descreve os User Stories criados a partir da Lista de Requisitos 
 | **Prioridade** | Essencial |
 | **Estimativa** | 5h | 
 | **Tempo Gasto (real):**   |                                     | 
-| **Tamanho Funcional** | 8 PF (pontos de função) |
+| **Tamanho Funcional** | 35 PF (pontos de função) |
 | **Analista**| Pedro (responsável por especificar/detalhar o US). |
 | **Desenvolvedor** | Gabriel W. (responsável por implementar e realizar testes de unidade e testes de integração). |
 | **Revisor** | Luan (responsável por avaliar a implementação e executar os testes de unidade e testes de integração). |
@@ -158,7 +159,7 @@ Este documento descreve os User Stories criados a partir da Lista de Requisitos 
 | **Prioridade** | Essencial |
 | **Estimativa** | 5h | 
 | **Tempo Gasto (real):**   |                                     | 
-| **Tamanho Funcional** | 8 PF (pontos de função) |
+| **Tamanho Funcional** | 35 PF (pontos de função) |
 | **Analista**| Pedro (responsável por especificar/detalhar o US). |
 | **Desenvolvedor** | Gabriel W. (responsável por implementar e realizar testes de unidade e testes de integração). |
 | **Revisor** | Luan (responsável por avaliar a implementação e executar os testes de unidade e testes de integração). |
