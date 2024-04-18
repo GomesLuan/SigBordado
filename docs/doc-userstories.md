@@ -37,7 +37,7 @@ Este documento descreve os User Stories criados a partir da Lista de Requisitos 
 | **Prioridade** | Essencial |
 | **Estimativa** | 20h |
 | **Tempo Gasto (real):**   |                                     | 
-| **Tamanho Funcional** | 35 PF (pontos de função) |
+| **Tamanho Funcional** | 50 PF (pontos de função) |
 | **Analista**| Pedro (responsável por especificar/detalhar o US). |
 | **Desenvolvedor** | Gabriel W. (responsável por implementar e realizar testes de unidade e testes de integração). |
 | **Revisor** | Luan (responsável por avaliar a implementação e executar os testes de unidade e testes de integração). |
@@ -159,7 +159,7 @@ Este documento descreve os User Stories criados a partir da Lista de Requisitos 
 | **Prioridade** | Essencial |
 | **Estimativa** | 5h | 
 | **Tempo Gasto (real):**   |                                     | 
-| **Tamanho Funcional** | 35 PF (pontos de função) |
+| **Tamanho Funcional** | 50 PF (pontos de função) |
 | **Analista**| Pedro (responsável por especificar/detalhar o US). |
 | **Desenvolvedor** | Gabriel W. (responsável por implementar e realizar testes de unidade e testes de integração). |
 | **Revisor** | Luan (responsável por avaliar a implementação e executar os testes de unidade e testes de integração). |
