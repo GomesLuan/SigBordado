@@ -28,8 +28,11 @@ Este documento descreve os User Stories criados a partir da Lista de Requisitos 
 
 | **Requisitos envolvidos** |                                                    |
 | ------------- | :------------------------------------------------------------- |
-| RF04          | Manter Pedido | 
-| RF05          | Faturar Pedido |
+| RF13          | Incluir Pedido |               
+| RF14          | Consultar Pedido |                   
+| RF15          | Alterar Pedido |                   
+| RF16          | Excluir Pedido |                     
+| RF17          | Faturar Pedido |           
 
 |                           |                                     |
 | ------------------------- | ----------------------------------- | 
@@ -58,8 +61,11 @@ Este documento descreve os User Stories criados a partir da Lista de Requisitos 
 
 | **Requisitos envolvidos** |                                                    |
 | ------------- | :------------------------------------------------------------- |
-| RF01          | Manter Cliente | 
-| RF06          | Relatórios de Cliente |
+| RF01          | Incluir Cliente |               
+| RF02          | Consultar Cliente |                  
+| RF03          | Alterar Cliente |              
+| RF04          | Excluir Cliente |              
+| RF18          | Relatórios de Cliente |                
 
 |                           |                                     |
 | ------------------------- | ----------------------------------- | 
@@ -87,9 +93,15 @@ Este documento descreve os User Stories criados a partir da Lista de Requisitos 
 
 | **Requisitos envolvidos** |                                                    |
 | ------------- | :------------------------------------------------------------- | 
-|RF03           | Manter Material | 
-|RF04           | Manter Pedido | 
-|RF08           | Relatórios de Material | 
+| RF09          | Incluir Material |                   
+| RF10          | Consultar Material |                     
+| RF11          | Alterar Material |                       
+| RF12          | Excluir Material |                      
+| RF13          | Incluir Pedido |                      
+| RF14          | Consultar Pedido |                    
+| RF15          | Alterar Pedido |                            
+| RF16          | Excluir Pedido |                      
+| RF20          | Relatórios de Material |                    
 
 |                           |                                     |
 | ------------------------- | ----------------------------------- | 
@@ -119,8 +131,11 @@ Este documento descreve os User Stories criados a partir da Lista de Requisitos 
 
 | **Requisitos envolvidos** |                                                    |
 | ------------- | :------------------------------------------------------------- | 
-|RF02           | Manter Funcionário |
-|RF07           | Relatórios de Funcionário | 
+| RF05           | Incluir Funcionário |                  
+| RF06           | Consultar Funcionário |                 
+| RF07           | Alterar Funcionário |                  
+| RF08           | Excluir Funcionário |                  
+| RF19           | Relatórios de Funcionário |                       
 
 |                           |                                     |
 | ------------------------- | ----------------------------------- | 
@@ -150,8 +165,11 @@ Este documento descreve os User Stories criados a partir da Lista de Requisitos 
 
 | **Requisitos envolvidos** |                                                    |
 | ------------- | :------------------------------------------------------------- | 
-|RF10           | Manter Produto |
-|RF11           | Relatórios de Produto | 
+| RF22          | Incluir Produto |                 
+| RF23          | Consultar Produto |                   
+| RF24          | Alterar Produto |                 
+| RF25          | Excluir Produto |                 
+| RF26          | Relatórios de Produto |                  
 
 |                           |                                     |
 | ------------------------- | ----------------------------------- | 

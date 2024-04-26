@@ -33,18 +33,39 @@ Funcionário                            | Este usuário pode acessar e dar baixa
 
 Requisito                                 | Descrição   | Ator |
 ---------                                 | ----------- | ---------- |
-RF01 - Manter Cliente | Um cliente tem código, nome, cpf ou cnpj, email, telefone, endereço. | Gerente |
-RF02 - Manter Funcionário | Um funcionário tem código, nome, cpf, rg, email, telefone, endereço. | Gerente |
-RF03 - Manter Material | Um material tem código, descrição e quantidade em estoque. | Gerente |
-RF04 - Manter Pedido | É a base da lógica de negócio da empresa. Um pedido tem código, cliente, funcionário, produto, opção de fornecer material, observações, status, valor adicional, desconto, forma de pagamento. | Gerente |
-RF05 - Faturar Pedido | Um faturamento de pedido é realizado após a finalização de sua manufatura, o que muda seu status no sistema e o libera para retirada. | Funcionário |
-RF06 - Relatórios de Cliente | O acesso a relatórios de clientes pode se provar útil possibilitando o acesso aos dados gerais de clientes sem a necessidade de utilizar seus identificadores | Gerente |
-RF07 - Relatórios de Funcionário | Um relatório útil para monitorar a carga de pedidos dos funcionários. | Gerente |
-RF08 - Relatórios de Material | Relatórios detalhados com as informações dos materiais utilizados para os bordados. São essenciais para o controle de estoque e garantir que os pedidos poderão ser entregues dentro do prazo. | Gerente |
-RF09 - Relatórios de Pedido | É o mais importante do sistema, pois será fundamental para a gestão das demandas. Com esta funcionalidade, o bordadeiro poderá ver todas as demandas e suas informações. | Gerente |
-RF10 - Manter Produto | Um produto tem valor, descrição e material. | Gerente |
-RF11 - Relatórios de Produto | Relatórios com as informações dos produtos disponiveis. São úteis para realizar pedidos. | Gerente |
-
+RF01 - Incluir Cliente | Adiciona um novo cliente ao sistema ao fornecer código, nome, CPF ou CNPJ, email, telefone e endereço. | Gerente |                  
+RF02 - Consultar Cliente | Visualiza as informações de um cliente. | Gerente |               
+RF03 - Alterar Cliente | Atualiza as informações de um cliente. | Gerente |              
+RF04 - Excluir Cliente | Remove um cliente do sistema. | Gerente |                  
+                  
+RF05 - Incluir Funcionário | Adiciona um novo funcionário ao sistema ao fornecer código, nome, CPF, RG, email, telefone e endereço. | Gerente |                 
+RF06 - Consultar Funcionário | Visualiza as informações de um funcionário. | Gerente |                 
+RF07 - Alterar Funcionário | Atualiza as informações de um funcionário. | Gerente |                  
+RF08 - Excluir Funcionário | Remove um funcionário do sistema. | Gerente |                
+              
+RF09 - Incluir Material | Adiciona um novo material ao sistema ao fornecer código, descrição e quantidade em estoque. | Gerente |             
+RF10 - Consultar Material | Visualiza as informações de um material. | Gerente |                    
+RF11 - Alterar Material | Atualiza as informações de um material. | Gerente |             
+RF12 - Excluir Material | Remove um material do sistema. | Gerente |             
+               
+RF13 - Incluir Pedido | Adiciona um novo pedido ao sistema ao fornecer código, cliente, funcionário, produto, opção de fornecer material, observações, status, valor adicional, desconto, e forma de pagamento. | Gerente |              
+RF14 - Consultar Pedido | Visualiza as informações de um pedido. | Gerente |               
+RF15 - Alterar Pedido | Atualiza as informações de um pedido. | Gerente |              
+RF16 - Excluir Pedido | Remove um pedido do sistema. | Gerente |              
+             
+RF17 - Faturar Pedido | Um faturamento de pedido é realizado após a finalização de sua manufatura, o que muda seu status no sistema e o libera para retirada. | Funcionário |              
+RF18 - Relatórios de Cliente | O acesso a relatórios de clientes pode se provar útil possibilitando o acesso aos dados gerais de clientes sem a necessidade de utilizar seus identificadores | Gerente |               
+RF19 - Relatórios de Funcionário | Um relatório útil para monitorar a carga de pedidos dos funcionários. | Gerente |          
+RF20 - Relatórios de Material | Relatórios detalhados com as informações dos materiais utilizados para os bordados. São essenciais para o controle de estoque e garantir que os pedidos poderão ser entregues dentro do prazo. | Gerente |                  
+RF21 - Relatórios de Pedido | É o mais importante do sistema, pois será fundamental para a gestão das demandas. Com esta funcionalidade, o bordadeiro poderá ver todas as demandas e suas informações. | Gerente |                
+                
+RF22 - Incluir Produto | Adiciona um novo produto ao sistema ao fornecer valor, descrição e material. | Gerente |              
+RF23 - Consultar Produto | Visualiza as informações de um produto. | Gerente |               
+RF24 - Alterar Produto | Atualiza as informações de um produto. | Gerente |              
+RF25 - Excluir Produto | Remove um produto do sistema. | Gerente |              
+                
+RF26 - Relatórios de Produto | Relatórios com as informações dos produtos disponiveis. São úteis para realizar pedidos. | Gerente |
+                 
 ## Lista de Requisitos Não Funcionais
 
 Requisito                                 | Descrição   |
