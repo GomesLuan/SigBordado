@@ -16,6 +16,7 @@ Este documento descreve os User Stories criados a partir da Lista de Requisitos 
 | 05/12/2023 | 1.3     | User Story US03 | Pedro |
 | 05/12/2023 | 1.4     | User Story US04 | Luan |
 | 16/04/2024 | 1.5     | Mudança dos PF  | Victor |
+| 27/06/2024 | 1.6     | Revisão Manter Material  | Victor |
 
 
 
@@ -98,10 +99,6 @@ Este documento descreve os User Stories criados a partir da Lista de Requisitos 
 | RF10          | Consultar Material |                     
 | RF11          | Alterar Material |                       
 | RF12          | Excluir Material |                      
-| RF13          | Incluir Pedido |                      
-| RF14          | Consultar Pedido |                    
-| RF15          | Alterar Pedido |                            
-| RF16          | Excluir Pedido |                      
 | RF20          | Relatórios de Material |                    
 
 |                           |                                     |
