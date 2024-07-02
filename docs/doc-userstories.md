@@ -1,4 +1,4 @@
-﻿# Documento Lista de User Stories
+# Documento Lista de User Stories
 
 Documento construído a partido da **Lista de User Stories** que pode ser encontrado no link: https://docs.google.com/document/d/1lUT58FXWbuLdyfhsjCCqvf6kRHDwMuMwDcVgL8dwXSM/edit?usp=sharing
 
@@ -17,6 +17,7 @@ Este documento descreve os User Stories criados a partir da Lista de Requisitos 
 | 05/12/2023 | 1.4     | User Story US04 | Luan |
 | 16/04/2024 | 1.5     | Mudança dos PF  | Victor |
 | 27/06/2024 | 1.6     | Revisão Manter Material  | Victor |
+
 
 
 
