@@ -17,7 +17,7 @@ Este documento descreve os User Stories criados a partir da Lista de Requisitos 
 | 05/12/2023 | 1.4     | User Story US04 | Luan |
 | 16/04/2024 | 1.5     | Mudança dos PF  | Victor |
 | 27/06/2024 | 1.6     | Revisão Manter Material  | Victor |
-
+| 27/06/2024 | 1.7     | Revisão Manter Pedido  | Pedro |
 
 
 
@@ -35,7 +35,8 @@ Este documento descreve os User Stories criados a partir da Lista de Requisitos 
 | RF14          | Consultar Pedido |                   
 | RF15          | Alterar Pedido |                   
 | RF16          | Excluir Pedido |                     
-| RF17          | Faturar Pedido |           
+| RF17          | Faturar Pedido |    
+| RF21          | Relatórios de Pedido |       
 
 |                           |                                     |
 | ------------------------- | ----------------------------------- | 
