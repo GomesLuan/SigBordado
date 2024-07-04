@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Funcionario
+from .models import Funcionario, Material
 
 
 class FuncionarioSerializer(serializers.ModelSerializer):
@@ -13,3 +13,10 @@ class FuncionarioSerializer(serializers.ModelSerializer):
                   'email',
                   'telefone',
                   'endereco') 
+        
+class MaterialSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Material
+        fields = ('cod',
+                  'descricao',
+                  'quantEst')
