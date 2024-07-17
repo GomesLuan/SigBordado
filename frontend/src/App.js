@@ -16,15 +16,34 @@ function App() {
     } else if (text === 'Listar Funcionários') {
       // Simulação de dados de funcionários (pode ser substituído por dados reais)
       const funcionarios = [
-        { id: 1, nome: 'João', imagem: 'https://img.freepik.com/fotos-gratis/topo-da-vista-da-montanha_23-2150528665.jpg' },
-        { id: 2, nome: 'Maria', imagem: 'https://ciclovivo.com.br/wp-content/uploads/2018/10/iStock-536613027-1024x683.jpg' },
-        { id: 3, nome: 'Pedro', imagem: 'https://i.pinimg.com/236x/2c/80/fa/2c80fa1128ae7769a9362596346ba9d8.jpg' }
+        { 
+          image: 'https://img.freepik.com/fotos-gratis/topo-da-vista-da-montanha_23-2150528665.jpg',
+          cod: 1,
+          nome: 'João',
+          cpf: '123.456.789-00',
+          senha: 'senha123',
+          rg: '987654321',
+          email: 'joao@example.com',
+          telefone: '(11) 99999-9999',
+          endereco: 'Rua Principal, 123'
+        },
+        {
+          image: 'https://ciclovivo.com.br/wp-content/uploads/2018/10/iStock-536613027-1024x683.jpg',
+          cod: 2,
+          nome: 'Maria',
+          cpf: '987.654.321-00',
+          senha: 'senha456',
+          rg: '123456789',
+          email: 'maria@example.com',
+          telefone: '(11) 88888-8888',
+          endereco: 'Avenida Secundária, 456'
+        }
       ];
 
       // Renderização dos cards dos funcionários
       const cardsFuncionarios = funcionarios.map((funcionario) => (
-        <div key={funcionario.id} className="card" onClick={() => handleCardClick(funcionario)}>
-          <img src={funcionario.imagem} alt={`Imagem de ${funcionario.nome}`} />
+        <div key={funcionario.cod} className="card" onClick={() => handleCardClick(funcionario)}>
+          <img src={funcionario.image} alt={`Imagem de ${funcionario.nome}`} />
           <p>{funcionario.nome}</p>
         </div>
       ));
@@ -46,7 +65,13 @@ function App() {
     setDialogContent(
       <div className="dialog">
         <h3>{funcionario.nome}</h3>
-        <img src={funcionario.imagem} alt={`Imagem de ${funcionario.nome}`} />
+        <p><strong>Código:</strong> {funcionario.cod}</p>
+        <p><strong>CPF:</strong> {funcionario.cpf}</p>
+        <p><strong>Senha:</strong> {funcionario.senha}</p>
+        <p><strong>RG:</strong> {funcionario.rg}</p>
+        <p><strong>Email:</strong> {funcionario.email}</p>
+        <p><strong>Telefone:</strong> {funcionario.telefone}</p>
+        <p><strong>Endereço:</strong> {funcionario.endereco}</p>
         <button onClick={() => setDialogContent(null)}>Fechar</button>
       </div>
     );
