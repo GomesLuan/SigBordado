@@ -3,6 +3,7 @@ import './App.css';
 
 function App() {
   const [rightColumnContent, setRightColumnContent] = useState(null);
+  const [dialogContent, setDialogContent] = useState(null);
 
   const handleClick = (text) => {
     if (text === 'Criar Funcionário') {
@@ -22,7 +23,7 @@ function App() {
 
       // Renderização dos cards dos funcionários
       const cardsFuncionarios = funcionarios.map((funcionario) => (
-        <div key={funcionario.id} className="card">
+        <div key={funcionario.id} className="card" onClick={() => handleCardClick(funcionario)}>
           <img src={funcionario.imagem} alt={`Imagem de ${funcionario.nome}`} />
           <p>{funcionario.nome}</p>
         </div>
@@ -41,6 +42,16 @@ function App() {
     }
   };
 
+  const handleCardClick = (funcionario) => {
+    setDialogContent(
+      <div className="dialog">
+        <h3>{funcionario.nome}</h3>
+        <img src={funcionario.imagem} alt={`Imagem de ${funcionario.nome}`} />
+        <button onClick={() => setDialogContent(null)}>Fechar</button>
+      </div>
+    );
+  };
+
   return (
     <div className="App">
       <header className="header">Header Fixo</header>
@@ -55,6 +66,7 @@ function App() {
           {rightColumnContent}
         </div>
       </div>
+      {dialogContent}
     </div>
   );
 }
