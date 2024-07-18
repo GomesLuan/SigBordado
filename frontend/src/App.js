@@ -5,7 +5,7 @@ function App() {
   const [rightColumnContent, setRightColumnContent] = useState(null);
   const [dialogContent, setDialogContent] = useState(null);
 
-  const handleClick = (text) => {
+  const handleClick = async (text) => {
     if (text === 'Criar Funcionário') {
       setRightColumnContent(
         <div>
@@ -14,48 +14,32 @@ function App() {
         </div>
       );
     } else if (text === 'Listar Funcionários') {
-      // Simulação de dados de funcionários (pode ser substituído por dados reais)
-      const funcionarios = [
-        { 
-          image: 'https://img.freepik.com/fotos-gratis/topo-da-vista-da-montanha_23-2150528665.jpg',
-          cod: 1,
-          nome: 'João',
-          cpf: '123.456.789-00',
-          senha: 'senha123',
-          rg: '987654321',
-          email: 'joao@example.com',
-          telefone: '(11) 99999-9999',
-          endereco: 'Rua Principal, 123'
-        },
-        {
-          image: 'https://ciclovivo.com.br/wp-content/uploads/2018/10/iStock-536613027-1024x683.jpg',
-          cod: 2,
-          nome: 'Maria',
-          cpf: '987.654.321-00',
-          senha: 'senha456',
-          rg: '123456789',
-          email: 'maria@example.com',
-          telefone: '(11) 88888-8888',
-          endereco: 'Avenida Secundária, 456'
+      try {
+        const response = await fetch('http://0.0.0.0:8080/funcionario/?format=json');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
         }
-      ];
+        const funcionarios = await response.json();
 
-      // Renderização dos cards dos funcionários
-      const cardsFuncionarios = funcionarios.map((funcionario) => (
-        <div key={funcionario.cod} className="card" onClick={() => handleCardClick(funcionario)}>
-          <img src={funcionario.image} alt={`Imagem de ${funcionario.nome}`} />
-          <p>{funcionario.nome}</p>
-        </div>
-      ));
-
-      setRightColumnContent(
-        <div>
-          <h2>Listar Funcionários</h2>
-          <div className="card-container">
-            {cardsFuncionarios}
+        const cardsFuncionarios = funcionarios.map((funcionario) => (
+          <div key={funcionario.cod} className="card" onClick={() => handleCardClick(funcionario)}>
+            <img src={funcionario.image} alt={`Imagem de ${funcionario.nome}`} />
+            <p>{funcionario.nome}</p>
           </div>
-        </div>
-      );
+        ));
+
+        setRightColumnContent(
+          <div>
+            <h2>Listar Funcionários</h2>
+            <div className="card-container">
+              {cardsFuncionarios}
+            </div>
+          </div>
+        );
+      } catch (error) {
+        console.error('Fetch error:', error);
+        setRightColumnContent(<p>Erro ao carregar funcionários.</p>);
+      }
     } else {
       alert(`Você clicou em: ${text}`);
     }
