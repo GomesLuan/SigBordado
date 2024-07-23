@@ -10,7 +10,7 @@ function App() {
       setRightColumnContent(
         <div>
           <h2>Criar Funcionário</h2>
-          <p>Aqui você pode criar um novo funcionário.</p>
+          <FormularioCriarFuncionario />
         </div>
       );
     } else if (text === 'Listar Funcionários') {
@@ -58,6 +58,95 @@ function App() {
         <p><strong>Endereço:</strong> {funcionario.endereco}</p>
         <button onClick={() => setDialogContent(null)}>Fechar</button>
       </div>
+    );
+  };
+
+  const FormularioCriarFuncionario = () => {
+    const [nome, setNome] = useState('111');
+    const [cpf, setCpf] = useState('111');
+    const [senha, setSenha] = useState('111');
+    const [rg, setRg] = useState('111');
+    const [email, setEmail] = useState('111');
+    const [telefone, setTelefone] = useState('111');
+    const [endereco, setEndereco] = useState('111');
+
+    const handleSubmit = async (event) => {
+      event.preventDefault();
+
+      const novoFuncionario = {
+        nome,
+        cpf,
+        senha,
+        rg,
+        email,
+        telefone,
+        endereco,
+      };
+
+      try {
+        const response = await fetch('http://0.0.0.0:8080/funcionario/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(novoFuncionario),
+        });
+
+        if (!response.ok) {
+          throw new Error('Erro ao criar funcionário');
+        }
+
+        const data = await response.json();
+        console.log('Funcionário criado com sucesso:', data);
+        alert('Funcionário criado com sucesso!');
+        
+        // Resetar o formulário após criação bem-sucedida
+        setNome('111');
+        setCpf('111');
+        setSenha('111');
+        setRg('111');
+        setEmail('111');
+        setTelefone('111');
+        setEndereco('111');
+        
+      } catch (error) {
+        console.error('Erro ao criar funcionário:', error);
+        alert('Erro ao criar funcionário');
+      }
+    };
+
+    return (
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Nome:</label>
+          <input type="text" value={nome} onChange={(e) => setNome(e.target.value)} />
+        </div>
+        <div>
+          <label>CPF:</label>
+          <input type="text" value={cpf} onChange={(e) => setCpf(e.target.value)} />
+        </div>
+        <div>
+          <label>Senha:</label>
+          <input type="password" value={senha} onChange={(e) => setSenha(e.target.value)} />
+        </div>
+        <div>
+          <label>RG:</label>
+          <input type="text" value={rg} onChange={(e) => setRg(e.target.value)} />
+        </div>
+        <div>
+          <label>Email:</label>
+          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+        </div>
+        <div>
+          <label>Telefone:</label>
+          <input type="text" value={telefone} onChange={(e) => setTelefone(e.target.value)} />
+        </div>
+        <div>
+          <label>Endereço:</label>
+          <input type="text" value={endereco} onChange={(e) => setEndereco(e.target.value)} />
+        </div>
+        <button type="submit">Criar Funcionário</button>
+      </form>
     );
   };
 
