@@ -1,38 +1,127 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+
+.header {
+  background-color: #333;
   color: white;
+  padding: 10px;
+  text-align: center;
+  position: initial;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000; /* Garante que o header fique acima das outras partes da página */
 }
 
-.App-link {
-  color: #61dafb;
+.container {
+  display: flex;
+  flex: 1;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.column {
+  height: calc(100vh - 50px); /* Ajuste a altura conforme necessário */
+}
+
+.column-left {
+  width: 30%;
+  background-color: lightblue;
+}
+
+.column-right {
+  flex: 1; /* Flex 1 faz com que esta coluna ocupe o espaço restante */
+  background-color: lightgreen;
+}
+
+/* Exemplo básico de CSS para o menu de navegação */
+nav {
+  background-color: #f0f0f0;
+  padding: 10px;
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline;
+  margin-right: 10px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #333;
+}
+
+nav ul li a:hover {
+  color: #666;
+}
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.card {
+  width: calc(33.33% - 20px); /* Ajuste conforme necessário para o número de cards por linha */
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  cursor: pointer; /* Transforma o cursor em um indicador de link */
+}
+
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.card p {
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  z-index: 1000;
+}
+
+.dialog h3 {
+  margin-bottom: 10px;
+}
+
+.dialog p {
+  margin-bottom: 5px;
+}
+
+.dialog button {
+  margin-top: 10px;
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.dialog button:hover {
+  background-color: #0056b3;
 }
