@@ -50,41 +50,42 @@ class MaterialView(APIView):
         try:
             material = Material.objects.get(cod=pk)
             return material
-        except:
-            return JsonResponse("Material Does Not Exist", safe=False)
+        except Material.DoesNotExist:
+            return None
 
     def get(self, request, pk=None):
         if pk:
-            data = self.get_material(pk)
-            serializer = MaterialSerializer(data)
+            material = self.get_material(pk)
+            if material is None:
+                return Response({"detail": "Material does not exist"}, status=status.HTTP_404_NOT_FOUND)
+            serializer = MaterialSerializer(material)
         else:
-            data = Material.objects.all()
-            serializer = MaterialSerializer(data, many=True)
-        return Response(serializer.data)
+            materials = Material.objects.all()
+            serializer = MaterialSerializer(materials, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request):
-        data = request.data
-        serializer = MaterialSerializer(data=data)
-
+        serializer = MaterialSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse("Material Created Successfully", safe=False)
-        return JsonResponse("Failed to Add Material", safe=False)
+            return Response({"detail": "Material created successfully"}, status=status.HTTP_201_CREATED)
+        return Response({"detail": "Failed to add material", "errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request, pk=None):
-        material_to_update = Material.objects.get(cod=pk)
-        serializer = MaterialSerializer(instance=material_to_update, data=request.data, partial=True)
-
+        material = self.get_material(pk)
+        if material is None:
+            return Response({"detail": "Material does not exist"}, status=status.HTTP_404_NOT_FOUND)
+        
+        serializer = MaterialSerializer(instance=material, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse("Material Updated Successfully", safe=False)
-        return JsonResponse("Failed to Update Material")
+            return Response({"detail": "Material updated successfully"}, status=status.HTTP_200_OK)
+        return Response({"detail": "Failed to update material", "errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk=None):
-        material_to_delete = Material.objects.get(cod=pk)
-        material_to_delete.delete()
-        return JsonResponse("Material Deleted Successfully", safe=False)
-
-
-
-
+        material = self.get_material(pk)
+        if material is None:
+            return Response({"detail": "Material does not exist"}, status=status.HTTP_404_NOT_FOUND)
+        
+        material.delete()
+        return Response({"detail": "Material deleted successfully"}, status=status.HTTP_204_NO_CONTENT)

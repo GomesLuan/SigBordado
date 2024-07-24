@@ -1,8 +1,14 @@
 from django.test import TestCase, RequestFactory
 from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.test import APITestCase, APIRequestFactory
+from rest_framework.views import APIView
 from .models import Funcionario
+from .models import Material
 from .serializers import FuncionarioSerializer
+from .serializers import MaterialSerializer
 from .views import FuncionarioView
+from .views import MaterialView
 
 class FuncionarioModelTest(TestCase):
 
@@ -188,43 +194,121 @@ class FuncionarioViewTest(TestCase):
         request = self.factory.delete('/funcionarios/999/')
         response = self.view(request, pk=999)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
-from django.test import TestCase
-from django import setup
-import os
-
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "backend.settings")
-setup()
-
-from .models import Material
 
 class MaterialModelTest(TestCase):
+    def setUp(self):
+        self.material = Material.objects.create(
+            descricao='Tecido Marrom',
+            quantEst=100
+        )
 
-    @classmethod
-    def setUpTestData(cls):
-        # Set up non-modified objects used by all test methods
-        Material.objects.create(descricao='Tecido Madeira', quantEst=10)
+    def test_material_creation(self):
+        material = Material.objects.get(cod=self.material.cod)
+        self.assertEqual(material.descricao, 'Tecido Marrom')
+        self.assertEqual(material.quantEst, 100)
 
-    def test_descricao_label(self):
-        material = Material.objects.get(cod=1)
-        field_label = material._meta.get_field('descricao').verbose_name
-        self.assertEqual(field_label, 'descricao')
+    def test_str_method(self):
+        self.assertEqual(str(self.material), 'Tecido Marrom')
 
-    def test_quantEst_label(self):
-        material = Material.objects.get(cod=1)
-        field_label = material._meta.get_field('quantEst').verbose_name
-        self.assertEqual(field_label, 'quantEst')
+class MaterialSerializerTest(TestCase):
+    def setUp(self):
+        self.material_attributes = {
+            'descricao': 'Tecido Marrom',
+            'quantEst': 100
+        }
+        self.material = Material.objects.create(**self.material_attributes)
+        self.serializer = MaterialSerializer(instance=self.material)
 
-    def test_descricao_max_length(self):
-        material = Material.objects.get(cod=1)
-        max_length = material._meta.get_field('descricao').max_length
-        self.assertEqual(max_length, 250)
+    def test_contains_expected_fields(self):
+        data = self.serializer.data
+        self.assertEqual(set(data.keys()), set(['cod', 'descricao', 'quantEst']))
 
-    def test_quantEst_value(self):
-        material = Material.objects.get(cod=1)
-        self.assertEqual(material.quantEst, 10)
+    def test_descricao_field_content(self):
+        data = self.serializer.data
+        self.assertEqual(data['descricao'], self.material_attributes['descricao'])
 
-    def test_field_existence(self):
-        material = Material.objects.get(cod=1)
-        self.assertTrue(hasattr(material, 'cod'))
-        self.assertTrue(hasattr(material, 'descricao'))
-        self.assertTrue(hasattr(material, 'quantEst'))
+    def test_quantEst_field_content(self):
+        data = self.serializer.data
+        self.assertEqual(data['quantEst'], self.material_attributes['quantEst'])
+
+    def test_create_material(self):
+        data = {
+            'descricao': 'Tecido Preto',
+            'quantEst': 200
+        }
+        serializer = MaterialSerializer(data=data)
+        self.assertTrue(serializer.is_valid())
+        material = serializer.save()
+        self.assertEqual(Material.objects.count(), 2)
+        self.assertEqual(material.descricao, data['descricao'])
+        self.assertEqual(material.quantEst, data['quantEst'])
+
+class MaterialViewTest(TestCase):
+
+    def setUp(self):
+        self.factory = RequestFactory()
+        self.view = MaterialView.as_view()
+        self.material_attributes = {
+            'descricao': 'Algodão',
+            'quantEst': 100
+        }
+        self.material = Material.objects.create(**self.material_attributes)
+        self.valid_payload = {
+            'descricao': 'Linho',
+            'quantEst': 50
+        }
+        self.invalid_payload = {
+            'descricao': '',
+            'quantEst': 50
+        }
+
+    def test_get_all_materials(self):
+        request = self.factory.get('/material/')
+        response = self.view(request)
+        materials = Material.objects.all()
+        serializer = MaterialSerializer(materials, many=True)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data, serializer.data)
+
+    def test_get_valid_single_material(self):
+        request = self.factory.get(f'/material/{self.material.cod}/')
+        response = self.view(request, pk=self.material.cod)
+        material = Material.objects.get(cod=self.material.cod)
+        serializer = MaterialSerializer(material)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data, serializer.data)
+
+    def test_get_invalid_single_material(self):
+        request = self.factory.get('/material/999/')
+        response = self.view(request, pk=999)
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_create_valid_material(self):
+        request = self.factory.post('/material/', data=self.valid_payload, content_type='application/json')
+        response = self.view(request)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_create_invalid_material(self):
+        request = self.factory.post('/material/', data=self.invalid_payload, content_type='application/json')
+        response = self.view(request)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_valid_update_material(self):
+        request = self.factory.put(f'/material/{self.material.cod}/', data=self.valid_payload, content_type='application/json')
+        response = self.view(request, pk=self.material.cod)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_invalid_update_material(self):
+        request = self.factory.put(f'/material/{self.material.cod}/', data=self.invalid_payload, content_type='application/json')
+        response = self.view(request, pk=self.material.cod)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_valid_delete_material(self):
+        request = self.factory.delete(f'/material/{self.material.cod}/')
+        response = self.view(request, pk=self.material.cod)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+    def test_invalid_delete_material(self):
+        request = self.factory.delete('/material/999/')
+        response = self.view(request, pk=999)
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
