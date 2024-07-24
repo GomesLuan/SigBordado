@@ -61,6 +61,7 @@ function App() {
         <p><strong>Endereço:</strong> {funcionario.endereco}</p>
         <button onClick={() => setDialogContent(null)}>Fechar</button>
         <button onClick={() => handleEditClick(funcionario)}>Editar</button>
+        <button onClick={() => handleDeleteClick(funcionario.cod)}>Deletar</button>
       </div>
     );
   };
@@ -73,6 +74,34 @@ function App() {
         <FormularioCriarFuncionario funcionario={funcionario} />
       </div>
     );
+  };
+
+  const handleDeleteClick = async (codigoFuncionario) => {
+    const confirmDelete = window.confirm("Tem certeza que deseja deletar este funcionário?");
+    if (!confirmDelete) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://0.0.0.0:8080/funcionario/${codigoFuncionario}/`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error('Erro ao deletar funcionário');
+      }
+
+      console.log('Funcionário deletado com sucesso');
+      alert('Funcionário deletado com sucesso!');
+      
+      setDialogContent(null);
+      
+      // Atualiza a lista de funcionários após a exclusão
+      handleClick('Listar Funcionários');
+    } catch (error) {
+      console.error('Erro ao deletar funcionário:', error);
+      alert('Erro ao deletar funcionário');
+    }
   };
 
   const FormularioCriarFuncionario = ({ funcionario = null }) => {
@@ -148,7 +177,7 @@ function App() {
         </div>
         <div>
           <label>CPF:</label>
-          <input type="text" value={cpf} onChange={(e) => setCpf(e.target.value)} />
+          <input type="text" value={cpf} onChange={(e) => setCpf(e.target.value)} readOnly={!!funcionario} />
         </div>
         <div>
           <label>Senha:</label>
@@ -156,7 +185,7 @@ function App() {
         </div>
         <div>
           <label>RG:</label>
-          <input type="text" value={rg} onChange={(e) => setRg(e.target.value)} />
+          <input type="text" value={rg} onChange={(e) => setRg(e.target.value)} readOnly={!!funcionario} />
         </div>
         <div>
           <label>Email:</label>
