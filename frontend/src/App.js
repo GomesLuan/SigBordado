@@ -1,12 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
   const [rightColumnContent, setRightColumnContent] = useState(null);
   const [dialogContent, setDialogContent] = useState(null);
+  const [funcionarioSelecionado, setFuncionarioSelecionado] = useState(null);
+  const [funcionarios, setFuncionarios] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    // Função para carregar a lista de funcionários ao montar o componente
+    const loadFuncionarios = async () => {
+      try {
+        const response = await fetch('http://0.0.0.0:8080/funcionario/?format=json');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const funcionariosData = await response.json();
+        setFuncionarios(funcionariosData);
+      } catch (error) {
+        console.error('Fetch error:', error);
+        setRightColumnContent(<p>Erro ao carregar funcionários.</p>);
+      }
+    };
+
+    loadFuncionarios();
+  }, []); // Executa apenas uma vez ao montar o componente
 
   const handleClick = async (text) => {
     if (text === 'Criar Funcionário') {
+      setFuncionarioSelecionado(null); // Limpa o funcionário selecionado ao criar novo
       setRightColumnContent(
         <div>
           <h2>Criar Funcionário</h2>
@@ -14,38 +37,33 @@ function App() {
         </div>
       );
     } else if (text === 'Listar Funcionários') {
-      try {
-        const response = await fetch('http://0.0.0.0:8080/funcionario/?format=json');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const funcionarios = await response.json();
-
-        const cardsFuncionarios = funcionarios.map((funcionario) => (
-          <div key={funcionario.cod} className="card" onClick={() => handleCardClick(funcionario)}>
-            <img src={funcionario.image} alt={`Imagem de ${funcionario.nome}`} />
-            <p>{funcionario.nome}</p>
-          </div>
-        ));
-
-        setRightColumnContent(
-          <div>
-            <h2>Listar Funcionários</h2>
-            <div className="card-container">
-              {cardsFuncionarios}
-            </div>
-          </div>
-        );
-      } catch (error) {
-        console.error('Fetch error:', error);
-        setRightColumnContent(<p>Erro ao carregar funcionários.</p>);
-      }
+      renderizarFuncionarios(funcionarios); // Renderiza a lista completa de funcionários
     } else {
       alert(`Você clicou em: ${text}`);
     }
   };
 
+  const renderizarFuncionarios = (funcionariosParaRenderizar) => {
+    // Renderiza os cartões de funcionários com base na lista fornecida
+    const cardsFuncionarios = funcionariosParaRenderizar.map((funcionario) => (
+      <div key={funcionario.cod} className="card" onClick={() => handleCardClick(funcionario)}>
+        <img src={funcionario.image} alt={`Imagem de ${funcionario.nome}`} />
+        <p>{funcionario.nome}</p>
+      </div>
+    ));
+
+    setRightColumnContent(
+      <div>
+        <h2>Listar Funcionários</h2>
+            <div className="card-container">
+              {cardsFuncionarios}
+            </div>
+      </div>
+    );
+  };
+
   const handleCardClick = (funcionario) => {
+    setFuncionarioSelecionado(funcionario); // Armazena o funcionário selecionado
     setDialogContent(
       <div className="dialog">
         <h3>{funcionario.nome}</h3>
@@ -57,18 +75,74 @@ function App() {
         <p><strong>Telefone:</strong> {funcionario.telefone}</p>
         <p><strong>Endereço:</strong> {funcionario.endereco}</p>
         <button onClick={() => setDialogContent(null)}>Fechar</button>
+        <button onClick={() => handleEditClick(funcionario)}>Editar</button>
+        <button onClick={() => handleDeleteClick(funcionario.cod)}>Deletar</button>
       </div>
     );
   };
 
-  const FormularioCriarFuncionario = () => {
-    const [nome, setNome] = useState('111');
-    const [cpf, setCpf] = useState('111');
-    const [senha, setSenha] = useState('111');
-    const [rg, setRg] = useState('111');
-    const [email, setEmail] = useState('111');
-    const [telefone, setTelefone] = useState('111');
-    const [endereco, setEndereco] = useState('111');
+  const handleEditClick = (funcionario) => {
+    setDialogContent(null); // Fecha o diálogo
+    setRightColumnContent(
+      <div>
+        <h2>Editar Funcionário</h2>
+        <FormularioCriarFuncionario funcionario={funcionario} />
+      </div>
+    );
+  };
+
+  const handleDeleteClick = async (codigoFuncionario) => {
+    const confirmDelete = window.confirm("Tem certeza que deseja deletar este funcionário?");
+    if (!confirmDelete) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://0.0.0.0:8080/funcionario/${codigoFuncionario}/`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error('Erro ao deletar funcionário');
+      }
+
+      console.log('Funcionário deletado com sucesso');
+      alert('Funcionário deletado com sucesso!');
+
+      setDialogContent(null);
+
+      // Atualiza a lista de funcionários após a exclusão
+      const updatedFuncionarios = funcionarios.filter(
+        (funcionario) => funcionario.cod !== codigoFuncionario
+      );
+      setFuncionarios(updatedFuncionarios);
+      renderizarFuncionarios(updatedFuncionarios);
+    } catch (error) {
+      console.error('Erro ao deletar funcionário:', error);
+      alert('Erro ao deletar funcionário');
+    }
+  };
+
+  const handleSearchChange = (event) => {
+    // Atualiza o termo de pesquisa e filtra a lista de funcionários
+    const term = event.target.value.toLowerCase();
+    setSearchTerm(term);
+    const filteredFuncionarios = funcionarios.filter((funcionario) =>
+      Object.values(funcionario).some((value) =>
+        String(value).toLowerCase().includes(term)
+      )
+    );
+    renderizarFuncionarios(filteredFuncionarios);
+  };
+
+  const FormularioCriarFuncionario = ({ funcionario = null }) => {
+    const [nome, setNome] = useState(funcionario ? funcionario.nome : '111');
+    const [cpf, setCpf] = useState(funcionario ? funcionario.cpf : '111');
+    const [senha, setSenha] = useState(funcionario ? funcionario.senha : '111');
+    const [rg, setRg] = useState(funcionario ? funcionario.rg : '111');
+    const [email, setEmail] = useState(funcionario ? funcionario.email : '111');
+    const [telefone, setTelefone] = useState(funcionario ? funcionario.telefone : '111');
+    const [endereco, setEndereco] = useState(funcionario ? funcionario.endereco : '111');
 
     const handleSubmit = async (event) => {
       event.preventDefault();
@@ -84,34 +158,45 @@ function App() {
       };
 
       try {
-        const response = await fetch('http://0.0.0.0:8080/funcionario/', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(novoFuncionario),
-        });
+        const response = funcionario
+          ? await fetch(`http://0.0.0.0:8080/funcionario/${funcionario.cod}/`, {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(novoFuncionario),
+            })
+          : await fetch('http://0.0.0.0:8080/funcionario/', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(novoFuncionario),
+            });
 
         if (!response.ok) {
-          throw new Error('Erro ao criar funcionário');
+          throw new Error('Erro ao salvar funcionário');
         }
 
         const data = await response.json();
-        console.log('Funcionário criado com sucesso:', data);
-        alert('Funcionário criado com sucesso!');
-        
-        // Resetar o formulário após criação bem-sucedida
-        setNome('111');
-        setCpf('111');
-        setSenha('111');
-        setRg('111');
-        setEmail('111');
-        setTelefone('111');
-        setEndereco('111');
-        
+        console.log('Funcionário salvo com sucesso:', data);
+        alert('Funcionário salvo com sucesso!');
+
+        // Atualiza a lista de funcionários após criação/edição
+        if (funcionario) {
+          const updatedFuncionarios = funcionarios.map((f) =>
+            f.cod === funcionario.cod ? data : f
+          );
+          setFuncionarios(updatedFuncionarios);
+        } else {
+          setFuncionarios([...funcionarios, data]);
+        }
+
+        // Volta para a lista de funcionários após salvar
+        handleClick('Listar Funcionários');
       } catch (error) {
-        console.error('Erro ao criar funcionário:', error);
-        alert('Erro ao criar funcionário');
+        console.error('Erro ao salvar funcionário:', error);
+        alert('Erro ao salvar funcionário');
       }
     };
 
@@ -123,7 +208,7 @@ function App() {
         </div>
         <div>
           <label>CPF:</label>
-          <input type="text" value={cpf} onChange={(e) => setCpf(e.target.value)} />
+          <input type="text" value={cpf} onChange={(e) => setCpf(e.target.value)} readOnly={!!funcionario} />
         </div>
         <div>
           <label>Senha:</label>
@@ -131,7 +216,7 @@ function App() {
         </div>
         <div>
           <label>RG:</label>
-          <input type="text" value={rg} onChange={(e) => setRg(e.target.value)} />
+          <input type="text" value={rg} onChange={(e) => setRg(e.target.value)} readOnly={!!funcionario} />
         </div>
         <div>
           <label>Email:</label>
@@ -145,14 +230,22 @@ function App() {
           <label>Endereço:</label>
           <input type="text" value={endereco} onChange={(e) => setEndereco(e.target.value)} />
         </div>
-        <button type="submit">Criar Funcionário</button>
+        <button type="submit">{funcionario ? 'Salvar Alterações' : 'Criar Funcionário'}</button>
       </form>
     );
   };
 
   return (
     <div className="App">
-      <header className="header">Header Fixo</header>
+      <header className="header">
+        <h1>Funcionários</h1>
+        <input
+          type="text"
+          placeholder="Buscar funcionário..."
+          value={searchTerm}
+          onChange={handleSearchChange}
+        />
+      </header>
       <div className="container">
         <div className="column column-left">
           <p onClick={() => handleClick('Criar Funcionário')}>Criar Funcionário</p>
