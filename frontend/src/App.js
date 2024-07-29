@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import {
+  fetchFuncionarios,
+  createFuncionario,
+  updateFuncionario,
+  deleteFuncionario,
+} from './funcionarioService';
 
 function App() {
   const [rightColumnContent, setRightColumnContent] = useState(null);
@@ -12,14 +18,9 @@ function App() {
     // Função para carregar a lista de funcionários ao montar o componente
     const loadFuncionarios = async () => {
       try {
-        const response = await fetch('http://0.0.0.0:8080/funcionario/?format=json');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const funcionariosData = await response.json();
+        const funcionariosData = await fetchFuncionarios();
         setFuncionarios(funcionariosData);
       } catch (error) {
-        console.error('Fetch error:', error);
         setRightColumnContent(<p>Erro ao carregar funcionários.</p>);
       }
     };
@@ -55,9 +56,9 @@ function App() {
     setRightColumnContent(
       <div>
         <h2>Listar Funcionários</h2>
-            <div className="card-container">
-              {cardsFuncionarios}
-            </div>
+        <div className="card-container">
+          {cardsFuncionarios}
+        </div>
       </div>
     );
   };
@@ -92,19 +93,13 @@ function App() {
   };
 
   const handleDeleteClick = async (codigoFuncionario) => {
-    const confirmDelete = window.confirm("Tem certeza que deseja deletar este funcionário?");
+    const confirmDelete = window.confirm('Tem certeza que deseja deletar este funcionário?');
     if (!confirmDelete) {
       return;
     }
 
     try {
-      const response = await fetch(`http://0.0.0.0:8080/funcionario/${codigoFuncionario}/`, {
-        method: 'DELETE',
-      });
-
-      if (!response.ok) {
-        throw new Error('Erro ao deletar funcionário');
-      }
+      await deleteFuncionario(codigoFuncionario);
 
       console.log('Funcionário deletado com sucesso');
       alert('Funcionário deletado com sucesso!');
@@ -158,44 +153,23 @@ function App() {
       };
 
       try {
-        const response = funcionario
-          ? await fetch(`http://0.0.0.0:8080/funcionario/${funcionario.cod}/`, {
-              method: 'PUT',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(novoFuncionario),
-            })
-          : await fetch('http://0.0.0.0:8080/funcionario/', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(novoFuncionario),
-            });
-
-        if (!response.ok) {
-          throw new Error('Erro ao salvar funcionário');
-        }
-
-        const data = await response.json();
-        console.log('Funcionário salvo com sucesso:', data);
-        alert('Funcionário salvo com sucesso!');
-
-        // Atualiza a lista de funcionários após criação/edição
         if (funcionario) {
+          const updatedFuncionario = await updateFuncionario(funcionario.cod, novoFuncionario);
           const updatedFuncionarios = funcionarios.map((f) =>
-            f.cod === funcionario.cod ? data : f
+            f.cod === funcionario.cod ? updatedFuncionario : f
           );
           setFuncionarios(updatedFuncionarios);
         } else {
-          setFuncionarios([...funcionarios, data]);
+          const novoFuncionarioCriado = await createFuncionario(novoFuncionario);
+          setFuncionarios([...funcionarios, novoFuncionarioCriado]);
         }
+
+        console.log('Funcionário salvo com sucesso');
+        alert('Funcionário salvo com sucesso!');
 
         // Volta para a lista de funcionários após salvar
         handleClick('Listar Funcionários');
       } catch (error) {
-        console.error('Erro ao salvar funcionário:', error);
         alert('Erro ao salvar funcionário');
       }
     };
