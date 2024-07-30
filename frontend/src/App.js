@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import {
+  fetchFuncionarios,
+  createFuncionario,
+  updateFuncionario,
+  deleteFuncionario,
+} from './funcionarioService';
 
 function App() {
   const [rightColumnContent, setRightColumnContent] = useState(null);
@@ -12,14 +18,9 @@ function App() {
     // Função para carregar a lista de funcionários ao montar o componente
     const loadFuncionarios = async () => {
       try {
-        const response = await fetch('http://0.0.0.0:8080/funcionario/?format=json');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const funcionariosData = await response.json();
+        const funcionariosData = await fetchFuncionarios();
         setFuncionarios(funcionariosData);
       } catch (error) {
-        console.error('Fetch error:', error);
         setRightColumnContent(<p>Erro ao carregar funcionários.</p>);
       }
     };
@@ -55,9 +56,9 @@ function App() {
     setRightColumnContent(
       <div>
         <h2>Listar Funcionários</h2>
-            <div className="card-container">
-              {cardsFuncionarios}
-            </div>
+        <div className="card-container">
+          {cardsFuncionarios}
+        </div>
       </div>
     );
   };
@@ -92,19 +93,13 @@ function App() {
   };
 
   const handleDeleteClick = async (codigoFuncionario) => {
-    const confirmDelete = window.confirm("Tem certeza que deseja deletar este funcionário?");
+    const confirmDelete = window.confirm('Tem certeza que deseja deletar este funcionário?');
     if (!confirmDelete) {
       return;
     }
 
     try {
-      const response = await fetch(`http://0.0.0.0:8080/funcionario/${codigoFuncionario}/`, {
-        method: 'DELETE',
-      });
-
-      if (!response.ok) {
-        throw new Error('Erro ao deletar funcionário');
-      }
+      await deleteFuncionario(codigoFuncionario);
 
       console.log('Funcionário deletado com sucesso');
       alert('Funcionário deletado com sucesso!');
@@ -136,104 +131,80 @@ function App() {
   };
 
   const FormularioCriarFuncionario = ({ funcionario = null }) => {
-    const [nome, setNome] = useState(funcionario ? funcionario.nome : '111');
-    const [cpf, setCpf] = useState(funcionario ? funcionario.cpf : '111');
-    const [senha, setSenha] = useState(funcionario ? funcionario.senha : '111');
-    const [rg, setRg] = useState(funcionario ? funcionario.rg : '111');
-    const [email, setEmail] = useState(funcionario ? funcionario.email : '111');
-    const [telefone, setTelefone] = useState(funcionario ? funcionario.telefone : '111');
-    const [endereco, setEndereco] = useState(funcionario ? funcionario.endereco : '111');
+    // ?? é o operador de coalescência nula, é igual a funcionario.nome == null ? '' : funcionario.nome 
+    // se o lado esquerdo for nulo então o valor atribuido será o direito, se não o esquerdo não for nulo, será o esquerdo
+    const [formData, setFormData] = useState({
+      nome: funcionario?.nome ?? '',
+      cpf: funcionario?.cpf ?? '',
+      senha: funcionario?.senha ?? '',
+      rg: funcionario?.rg ?? '',
+      email: funcionario?.email ?? '',
+      telefone: funcionario?.telefone ?? '',
+      endereco: funcionario?.endereco ?? '',
+    });
 
-    const handleSubmit = async (event) => {
-      event.preventDefault();
+  const fields = [
+    { name: 'nome', label: 'Nome', type: 'text', readOnly: false },
+    { name: 'cpf', label: 'CPF', type: 'text', readOnly: !!funcionario },
+    { name: 'senha', label: 'Senha', type: 'password', readOnly: false },
+    { name: 'rg', label: 'RG', type: 'text', readOnly: !!funcionario },
+    { name: 'email', label: 'Email', type: 'email', readOnly: false },
+    { name: 'telefone', label: 'Telefone', type: 'text', readOnly: false },
+    { name: 'endereco', label: 'Endereço', type: 'text', readOnly: false },
+  ];
 
-      const novoFuncionario = {
-        nome,
-        cpf,
-        senha,
-        rg,
-        email,
-        telefone,
-        endereco,
-      };
-
-      try {
-        const response = funcionario
-          ? await fetch(`http://0.0.0.0:8080/funcionario/${funcionario.cod}/`, {
-              method: 'PUT',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(novoFuncionario),
-            })
-          : await fetch('http://0.0.0.0:8080/funcionario/', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(novoFuncionario),
-            });
-
-        if (!response.ok) {
-          throw new Error('Erro ao salvar funcionário');
-        }
-
-        const data = await response.json();
-        console.log('Funcionário salvo com sucesso:', data);
-        alert('Funcionário salvo com sucesso!');
-
-        // Atualiza a lista de funcionários após criação/edição
-        if (funcionario) {
-          const updatedFuncionarios = funcionarios.map((f) =>
-            f.cod === funcionario.cod ? data : f
-          );
-          setFuncionarios(updatedFuncionarios);
-        } else {
-          setFuncionarios([...funcionarios, data]);
-        }
-
-        // Volta para a lista de funcionários após salvar
-        handleClick('Listar Funcionários');
-      } catch (error) {
-        console.error('Erro ao salvar funcionário:', error);
-        alert('Erro ao salvar funcionário');
-      }
-    };
-
-    return (
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Nome:</label>
-          <input type="text" value={nome} onChange={(e) => setNome(e.target.value)} />
-        </div>
-        <div>
-          <label>CPF:</label>
-          <input type="text" value={cpf} onChange={(e) => setCpf(e.target.value)} readOnly={!!funcionario} />
-        </div>
-        <div>
-          <label>Senha:</label>
-          <input type="password" value={senha} onChange={(e) => setSenha(e.target.value)} />
-        </div>
-        <div>
-          <label>RG:</label>
-          <input type="text" value={rg} onChange={(e) => setRg(e.target.value)} readOnly={!!funcionario} />
-        </div>
-        <div>
-          <label>Email:</label>
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-        </div>
-        <div>
-          <label>Telefone:</label>
-          <input type="text" value={telefone} onChange={(e) => setTelefone(e.target.value)} />
-        </div>
-        <div>
-          <label>Endereço:</label>
-          <input type="text" value={endereco} onChange={(e) => setEndereco(e.target.value)} />
-        </div>
-        <button type="submit">{funcionario ? 'Salvar Alterações' : 'Criar Funcionário'}</button>
-      </form>
-    );
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      if (funcionario) {
+        const updatedFuncionario = await updateFuncionario(funcionario.cod, formData);
+        const updatedFuncionarios = funcionarios.map((f) =>
+          f.cod === funcionario.cod ? updatedFuncionario : f
+        );
+        setFuncionarios(updatedFuncionarios);
+      } else {
+        const novoFuncionarioCriado = await createFuncionario(formData);
+        setFuncionarios([...funcionarios, novoFuncionarioCriado]);
+      }
+
+      console.log('Funcionário salvo com sucesso');
+      alert('Funcionário salvo com sucesso!');
+
+      // Volta para a lista de funcionários após salvar
+      handleClick('Listar Funcionários');
+    } catch (error) {
+      alert('Erro ao salvar funcionário');
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      {fields.map((field, index) => (
+        <div key={index}>
+          <label>{field.label}:</label>
+          <input
+            type={field.type}
+            name={field.name}
+            value={formData[field.name]}
+            onChange={handleChange}
+            readOnly={field.readOnly}
+          />
+        </div>
+      ))}
+      <button type="submit">{funcionario ? 'Salvar Alterações' : 'Criar Funcionário'}</button>
+    </form>
+  );
+};
+
 
   return (
     <div className="App">
