@@ -32,3 +32,6 @@ class MaterialProduto(models.Model):
     codProduto = models.ForeignKey(Produto, on_delete=models.CASCADE)
     codMaterial = models.ForeignKey(Material, on_delete=models.CASCADE)
     quantUsa = models.FloatField()
+
+    class Meta:
+        unique_together = (('codProduto', 'codMaterial'))
