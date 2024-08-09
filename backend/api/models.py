@@ -22,3 +22,22 @@ class Material(models.Model):
 
     def __str__(self):
         return self.descricao
+    
+class Produto(models.Model):
+    cod = models.AutoField(primary_key=True)
+    valor = models.FloatField()
+    descricao = models.CharField(max_length=250)
+
+    def __str__(self):
+        return self.descricao
+
+class MaterialProduto(models.Model):
+    codProduto = models.ForeignKey(Produto, on_delete=models.CASCADE)
+    codMaterial = models.ForeignKey(Material, on_delete=models.CASCADE)
+    quantUsa = models.FloatField()
+
+    class Meta:
+        unique_together = (('codProduto', 'codMaterial'))
+
+    def __str__(self):
+        return f'{self.codProduto.descricao} - {self.codMaterial.descricao} ({self.quantUsa})'

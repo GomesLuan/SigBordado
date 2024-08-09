@@ -4,11 +4,13 @@ Documento construído partido do Projeto Arquitetural do Software que pode ser e
 
 | Data       | Versão  | Descrição                          | Autor                          |
 | :--------- | :-----: | :--------------------------------: | :----------------------------- |
-| 24/03/2024 | 1.0     | Documento inicial | Victor |
-| 01/04/2024 | 1.1     | Correção | Victor |
-| 02/04/2024 | 1.2     | Descição | Victor |
+| 24/03/2024 | 1.0     | Documento inicial                  | Victor |
+| 01/04/2024 | 1.1     | Correção                           | Victor |
+| 02/04/2024 | 1.2     | Descição                           | Victor |
+| 08/08/2024 | 1.3     | Correção Arquitetural              | Victor |
 
-![Documento Arquitetual](https://i.ibb.co/hZd3170/Arquitetura-2.png)
+
+![Documento Arquitetual](https://i.ibb.co/6XVyPJy/Arquitetura-3.png)
 
 
 ## Descrição

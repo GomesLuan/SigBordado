@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Funcionario, Material
+from .models import Funcionario, Material, Produto, MaterialProduto
 
 
 class FuncionarioSerializer(serializers.ModelSerializer):
@@ -20,3 +20,17 @@ class MaterialSerializer(serializers.ModelSerializer):
         fields = ('cod',
                   'descricao',
                   'quantEst')
+        
+class ProdutoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Produto
+        fields = ('cod',
+                  'valor',
+                  'descricao')
+        
+class MaterialProdutoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MaterialProduto
+        fields = ('codProduto',
+                  'codMaterial',
+                  'quantUsa')
