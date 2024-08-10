@@ -2,6 +2,17 @@ from django.db import models
 
 # Create your models here.
 
+class Cliente(models.Model):
+    cod = models.AutoField(primary_key=True)
+    nome = models.CharField(max_length=150)
+    cpfCnpj = models.CharField(max_length=14, unique=True)
+    email = models.EmailField(max_length=150)
+    telefone = models.CharField(max_length=20)
+    endereco = models.CharField(max_length=250)
+    
+    def __str__(self):
+        return self.nome
+
 class Funcionario(models.Model):
     cod = models.AutoField(primary_key=True)
     nome = models.CharField(max_length=150)

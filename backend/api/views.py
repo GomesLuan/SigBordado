@@ -1,8 +1,8 @@
 from rest_framework.views import APIView
 from rest_framework import status
-from .serializers import FuncionarioSerializer, MaterialSerializer
+from .serializers import FuncionarioSerializer, MaterialSerializer, ClienteSerializer
 from django.http import JsonResponse
-from .models import Funcionario, Material
+from .models import Funcionario, Material, Cliente
 from django.http import Http404
 from rest_framework.response import Response
 
@@ -89,3 +89,49 @@ class MaterialView(APIView):
         
         material.delete()
         return Response({"detail": "Material deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
+
+class ClienteView(APIView):
+
+    def get_cliente(self, pk):
+        try:
+            cliente = Cliente.objects.get(cod=pk)
+            return cliente
+        except Cliente.DoesNotExist:
+            return None
+
+    def get(self, request, pk=None):
+        if pk:
+            cliente = self.get_cliente(pk)
+            if cliente is None:
+                return Response({"detail": "Cliente does not exist"}, status=status.HTTP_404_NOT_FOUND)
+            serializer = ClienteSerializer(cliente)
+        else:
+            clientes = Cliente.objects.all()
+            serializer = ClienteSerializer(clientes, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        serializer = ClienteSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"detail": "Cliente created successfully"}, status=status.HTTP_201_CREATED)
+        return Response({"detail": "Failed to add cliente", "errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, pk=None):
+        cliente = self.get_cliente(pk)
+        if cliente is None:
+            return Response({"detail": "Cliente does not exist"}, status=status.HTTP_404_NOT_FOUND)
+        
+        serializer = ClienteSerializer(instance=cliente, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"detail": "Cliente updated successfully"}, status=status.HTTP_200_OK)
+        return Response({"detail": "Failed to update cliente", "errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk=None):
+        cliente = self.get_cliente(pk)
+        if cliente is None:
+            return Response({"detail": "Cliente does not exist"}, status=status.HTTP_404_NOT_FOUND)
+        
+        cliente.delete()
+        return Response({"detail": "Cliente deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
