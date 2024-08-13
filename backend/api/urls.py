@@ -9,7 +9,7 @@ urlpatterns = [
     path("material/<int:pk>/", MaterialView.as_view()),
 
     path("cliente/", ClienteView.as_view()),
-    path("cliente/<int:pk>/", ClienteView.as_view())  
+    path("cliente/<int:pk>/", ClienteView.as_view()),  
     path("produto/", ProdutoView.as_view()),
     path("produto/<int:pk>/", ProdutoView.as_view()),
     path("materialProduto/", MaterialProdutoView.as_view())
