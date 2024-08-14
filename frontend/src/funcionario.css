@@ -19,7 +19,7 @@
   width: 100%;
   top: 0;
   left: 0;
-  z-index: 1000; /* Garante que o header fique acima das outras partes da página */
+  z-index: 1000;
 }
 
 .container {
@@ -28,43 +28,41 @@
 }
 
 .column {
-  height: calc(100vh - 50px); /* Ajuste a altura conforme necessário */
+  height: calc(100vh - 50px);
 }
 
 .column-left {
   width: 30%;
-  background-color: lightblue;
+  background-color: #f1f1f1;
+  padding: 20px;
 }
 
 .column-right {
-  flex: 1; /* Flex 1 faz com que esta coluna ocupe o espaço restante */
-  background-color: lightgreen;
+  flex: 1;
+  background-color: rgba(255, 255, 255, 0.8); /* Fundo branco translúcido */
+  backdrop-filter: blur(10px); /* Efeito de desfoque */
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra para criar profundidade */
+  overflow-y: auto; /* Permite rolagem se o conteúdo for maior que a altura da coluna */
 }
 
-/* Exemplo básico de CSS para o menu de navegação */
-nav {
-  background-color: #f0f0f0;
+/* Estilizações adicionais */
+
+.column-left p {
+  cursor: pointer;
   padding: 10px;
+  background-color: #007bff;
+  color: white;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  text-align: center;
+  transition: background-color 0.3s ease;
 }
 
-nav ul {
-  list-style-type: none;
-  padding: 0;
+.column-left p:hover {
+  background-color: #0056b3;
 }
 
-nav ul li {
-  display: inline;
-  margin-right: 10px;
-}
-
-nav ul li a {
-  text-decoration: none;
-  color: #333;
-}
-
-nav ul li a:hover {
-  color: #666;
-}
 .card-container {
   display: flex;
   flex-wrap: wrap;
@@ -72,12 +70,18 @@ nav ul li a:hover {
 }
 
 .card {
-  width: calc(33.33% - 20px); /* Ajuste conforme necessário para o número de cards por linha */
+  width: calc(33.33% - 20px);
   background-color: white;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  cursor: pointer; /* Transforma o cursor em um indicador de link */
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }
 
 .card img {
