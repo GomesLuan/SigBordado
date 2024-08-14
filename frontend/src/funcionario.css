@@ -14,12 +14,32 @@
   background-color: #333;
   color: white;
   padding: 10px;
-  text-align: center;
-  position: initial;
+  display: flex;
+  justify-content: space-between; /* Ajusta a posição dos elementos no header */
+  align-items: center;
+  position: relative;
   width: 100%;
-  top: 0;
-  left: 0;
-  z-index: 1000;
+  z-index: 1000; /* Garante que o header fique acima das outras partes da página */
+}
+
+.header h1 {
+  margin-left: 20px; /* Espaço à esquerda do título */
+}
+
+.header input[type="text"] {
+  width: 300px;
+  padding: 8px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #333;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.header input[type="text"]:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
 .container {
