@@ -6,14 +6,25 @@ import {
   updateFuncionario,
   deleteFuncionario,
 } from './funcionarioService';
-
+import { FormularioGenerico } from './formulario';
 function App() {
   const [rightColumnContent, setRightColumnContent] = useState(null);
   const [dialogContent, setDialogContent] = useState(null);
   const [funcionarioSelecionado, setFuncionarioSelecionado] = useState(null);
   const [funcionarios, setFuncionarios] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-
+  
+  const modeloFuncionario = {
+    campos: [
+      { name: 'nome', label: 'Nome', type: 'text', readOnly: false },
+      { name: 'cpf', label: 'CPF', type: 'text', readOnly: false },
+      { name: 'senha', label: 'Senha', type: 'password', readOnly: false },
+      { name: 'rg', label: 'RG', type: 'text', readOnly: false },
+      { name: 'email', label: 'Email', type: 'email', readOnly: false },
+      { name: 'telefone', label: 'Telefone', type: 'text', readOnly: false },
+      { name: 'endereco', label: 'Endereço', type: 'text', readOnly: false },
+    ],
+  };
   useEffect(() => {
     // Função para carregar a lista de funcionários ao montar o componente
     const loadFuncionarios = async () => {
@@ -34,7 +45,10 @@ function App() {
       setRightColumnContent(
         <div>
           <h2>Criar Funcionário</h2>
-          <FormularioCriarFuncionario />
+          <FormularioGenerico 
+          modeloClasse={modeloFuncionario} 
+          handleSubmitCallback={createFuncionario}
+          />
         </div>
       );
     } else if (text === 'Listar Funcionários') {
@@ -64,17 +78,17 @@ function App() {
   };
 
   const handleCardClick = (funcionario) => {
+    const campos = modeloFuncionario.campos.map((campo) => (
+      <p key={campo.name}>
+        <strong>{campo.label}:</strong> {funcionario[campo.name]}
+      </p>
+    ));
+  
     setFuncionarioSelecionado(funcionario); // Armazena o funcionário selecionado
     setDialogContent(
       <div className="dialog">
         <h3>{funcionario.nome}</h3>
-        <p><strong>Código:</strong> {funcionario.cod}</p>
-        <p><strong>CPF:</strong> {funcionario.cpf}</p>
-        <p><strong>Senha:</strong> {funcionario.senha}</p>
-        <p><strong>RG:</strong> {funcionario.rg}</p>
-        <p><strong>Email:</strong> {funcionario.email}</p>
-        <p><strong>Telefone:</strong> {funcionario.telefone}</p>
-        <p><strong>Endereço:</strong> {funcionario.endereco}</p>
+        {campos}
         <button className='close' onClick={() => setDialogContent(null)}>Fechar</button>
         <button className='edit' onClick={() => handleEditClick(funcionario)}>Editar</button>
         <button className='delete' onClick={() => handleDeleteClick(funcionario.cod)}>Deletar</button>
@@ -87,7 +101,11 @@ function App() {
     setRightColumnContent(
       <div>
         <h2>Editar Funcionário</h2>
-        <FormularioCriarFuncionario funcionario={funcionario} />
+        <FormularioGenerico 
+        modeloClasse={modeloFuncionario}
+        dadosIniciais={funcionario}
+        handleSubmitCallback={updateFuncionario}
+        />
       </div>
     );
   };
@@ -130,80 +148,6 @@ function App() {
     renderizarFuncionarios(filteredFuncionarios);
   };
 
-  const FormularioCriarFuncionario = ({ funcionario = null }) => {
-    // ?? é o operador de coalescência nula, é igual a funcionario.nome == null ? '' : funcionario.nome 
-    // se o lado esquerdo for nulo então o valor atribuido será o direito, se não o esquerdo não for nulo, será o esquerdo
-    const [formData, setFormData] = useState({
-      nome: funcionario?.nome ?? '',
-      cpf: funcionario?.cpf ?? '',
-      senha: funcionario?.senha ?? '',
-      rg: funcionario?.rg ?? '',
-      email: funcionario?.email ?? '',
-      telefone: funcionario?.telefone ?? '',
-      endereco: funcionario?.endereco ?? '',
-    });
-
-  const fields = [
-    { name: 'nome', label: 'Nome', type: 'text', readOnly: false },
-    { name: 'cpf', label: 'CPF', type: 'text', readOnly: !!funcionario },
-    { name: 'senha', label: 'Senha', type: 'password', readOnly: false },
-    { name: 'rg', label: 'RG', type: 'text', readOnly: !!funcionario },
-    { name: 'email', label: 'Email', type: 'email', readOnly: false },
-    { name: 'telefone', label: 'Telefone', type: 'text', readOnly: false },
-    { name: 'endereco', label: 'Endereço', type: 'text', readOnly: false },
-  ];
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    try {
-      if (funcionario) {
-        const updatedFuncionario = await updateFuncionario(funcionario.cod, formData);
-        const updatedFuncionarios = funcionarios.map((f) =>
-          f.cod === funcionario.cod ? updatedFuncionario : f
-        );
-        setFuncionarios(updatedFuncionarios);
-      } else {
-        const novoFuncionarioCriado = await createFuncionario(formData);
-        setFuncionarios([...funcionarios, novoFuncionarioCriado]);
-      }
-
-      console.log('Funcionário salvo com sucesso');
-      alert('Funcionário salvo com sucesso!');
-
-      // Volta para a lista de funcionários após salvar
-      handleClick('Listar Funcionários');
-    } catch (error) {
-      alert('Erro ao salvar funcionário');
-    }
-  };
-
-  return (
-    <form onSubmit={handleSubmit}>
-      {fields.map((field, index) => (
-        <div key={index}>
-          <label>{field.label}:</label>
-          <input
-            type={field.type}
-            name={field.name}
-            value={formData[field.name]}
-            onChange={handleChange}
-            readOnly={field.readOnly}
-          />
-        </div>
-      ))}
-      <button type="submit">{funcionario ? 'Salvar Alterações' : 'Criar Funcionário'}</button>
-    </form>
-  );
-};
 
 
   return (
