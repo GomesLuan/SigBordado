@@ -6,14 +6,25 @@ import {
   updateFuncionario,
   deleteFuncionario,
 } from './funcionarioService';
-
+import { FormularioGenerico } from './formulario';
 function App() {
   const [rightColumnContent, setRightColumnContent] = useState(null);
   const [dialogContent, setDialogContent] = useState(null);
   const [funcionarioSelecionado, setFuncionarioSelecionado] = useState(null);
   const [funcionarios, setFuncionarios] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-
+  
+  const modeloFuncionario = {
+    campos: [
+      { name: 'nome', label: 'Nome', type: 'text', readOnly: false },
+      { name: 'cpf', label: 'CPF', type: 'text', readOnly: false },
+      { name: 'senha', label: 'Senha', type: 'password', readOnly: false },
+      { name: 'rg', label: 'RG', type: 'text', readOnly: false },
+      { name: 'email', label: 'Email', type: 'email', readOnly: false },
+      { name: 'telefone', label: 'Telefone', type: 'text', readOnly: false },
+      { name: 'endereco', label: 'Endereço', type: 'text', readOnly: false },
+    ],
+  };
   useEffect(() => {
     // Função para carregar a lista de funcionários ao montar o componente
     const loadFuncionarios = async () => {
@@ -34,7 +45,10 @@ function App() {
       setRightColumnContent(
         <div>
           <h2>Criar Funcionário</h2>
-          <FormularioCriarFuncionario />
+          <FormularioGenerico 
+          modeloClasse={modeloFuncionario} 
+          handleSubmitCallback={createFuncionario}
+          />
         </div>
       );
     } else if (text === 'Listar Funcionários') {
@@ -87,7 +101,11 @@ function App() {
     setRightColumnContent(
       <div>
         <h2>Editar Funcionário</h2>
-        <FormularioCriarFuncionario funcionario={funcionario} />
+        <FormularioGenerico 
+        modeloClasse={modeloFuncionario}
+        dadosIniciais={funcionario}
+        handleSubmitCallback={updateFuncionario}
+        />
       </div>
     );
   };
