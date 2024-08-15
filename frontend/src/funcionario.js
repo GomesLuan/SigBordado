@@ -78,17 +78,17 @@ function App() {
   };
 
   const handleCardClick = (funcionario) => {
+    const campos = modeloFuncionario.campos.map((campo) => (
+      <p key={campo.name}>
+        <strong>{campo.label}:</strong> {funcionario[campo.name]}
+      </p>
+    ));
+  
     setFuncionarioSelecionado(funcionario); // Armazena o funcionário selecionado
     setDialogContent(
       <div className="dialog">
         <h3>{funcionario.nome}</h3>
-        <p><strong>Código:</strong> {funcionario.cod}</p>
-        <p><strong>CPF:</strong> {funcionario.cpf}</p>
-        <p><strong>Senha:</strong> {funcionario.senha}</p>
-        <p><strong>RG:</strong> {funcionario.rg}</p>
-        <p><strong>Email:</strong> {funcionario.email}</p>
-        <p><strong>Telefone:</strong> {funcionario.telefone}</p>
-        <p><strong>Endereço:</strong> {funcionario.endereco}</p>
+        {campos}
         <button className='close' onClick={() => setDialogContent(null)}>Fechar</button>
         <button className='edit' onClick={() => handleEditClick(funcionario)}>Editar</button>
         <button className='delete' onClick={() => handleDeleteClick(funcionario.cod)}>Deletar</button>
