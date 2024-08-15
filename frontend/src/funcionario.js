@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './App.css';
+import './funcionario.css';
 import {
   fetchFuncionarios,
   createFuncionario,
@@ -75,9 +75,9 @@ function App() {
         <p><strong>Email:</strong> {funcionario.email}</p>
         <p><strong>Telefone:</strong> {funcionario.telefone}</p>
         <p><strong>Endereço:</strong> {funcionario.endereco}</p>
-        <button onClick={() => setDialogContent(null)}>Fechar</button>
-        <button onClick={() => handleEditClick(funcionario)}>Editar</button>
-        <button onClick={() => handleDeleteClick(funcionario.cod)}>Deletar</button>
+        <button className='close' onClick={() => setDialogContent(null)}>Fechar</button>
+        <button className='edit' onClick={() => handleEditClick(funcionario)}>Editar</button>
+        <button className='delete' onClick={() => handleDeleteClick(funcionario.cod)}>Deletar</button>
       </div>
     );
   };

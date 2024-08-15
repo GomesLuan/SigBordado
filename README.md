@@ -17,4 +17,7 @@ Sistema de gerenciamento de uma casa de bordados. Projeto utilizado como forma d
 - [Iteração](docs/doc-iteracao.md)              
 - [Modelo](docs/doc-modelo.md)              
 - [User Stories](docs/doc-userstories.md)              
-- [Visão](docs/doc-visao.md)             
+- [Visão](docs/doc-visao.md)
+
+- ### Arquivo de testes:
+- teste do frontend: https://github.com/GomesLuan/SigBordado/blob/teste-funcionario-66/frontend/src/tests.js
