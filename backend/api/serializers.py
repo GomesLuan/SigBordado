@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Funcionario, Material, Produto, MaterialProduto, Cliente, Pedido
+from .models import Funcionario, Material, Produto, MaterialProduto, Cliente, Pedido, PedidoProduto
 
 class ClienteSerializer(serializers.ModelSerializer):
     class Meta:
@@ -57,3 +57,10 @@ class PedidoSerializer(serializers.ModelSerializer):
                   'valorAdicional',
                   'desconto',
                   'formaPagamento') 
+        
+class PedidoProdutoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PedidoProduto
+        fields = ('codPedido',
+                  'codProduto',
+                  'quantidade')
