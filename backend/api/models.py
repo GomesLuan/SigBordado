@@ -70,7 +70,7 @@ class Pedido(models.Model):
 class PedidoProduto(models.Model):
     codPedido = models.ForeignKey(Pedido, on_delete=models.CASCADE)
     codProduto = models.ForeignKey(Produto, on_delete=models.CASCADE)
-    quantidate = models.IntegerField()
+    quantidade = models.IntegerField()
 
     class Meta:
         unique_together = (('codPedido', 'codProduto'))

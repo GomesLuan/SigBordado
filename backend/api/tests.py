@@ -4,9 +4,9 @@ from rest_framework.response import Response
 from rest_framework.test import APITestCase, APIRequestFactory
 from rest_framework.views import APIView
 
-from .models import Funcionario, Material, Produto, MaterialProduto, Cliente, Pedido
-from .serializers import FuncionarioSerializer, MaterialSerializer, ProdutoSerializer, MaterialProdutoSerializer, ClienteSerializer, PedidoSerializer
-from .views import FuncionarioView, MaterialView, ProdutoView, MaterialProdutoView, ClienteView, PedidoView
+from .models import Funcionario, Material, Produto, MaterialProduto, Cliente, Pedido, PedidoProduto
+from .serializers import FuncionarioSerializer, MaterialSerializer, ProdutoSerializer, MaterialProdutoSerializer, ClienteSerializer, PedidoSerializer, PedidoProdutoSerializer
+from .views import FuncionarioView, MaterialView, ProdutoView, MaterialProdutoView, ClienteView, PedidoView, PedidoProdutoView
 
 
 class FuncionarioModelTest(TestCase):
@@ -933,3 +933,190 @@ class PedidoViewTest(TestCase):
         response = self.view(request, pk=999)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
         self.assertEqual(response.data['detail'], 'Pedido does not exist')
+
+class PedidoProdutoModelTest(TestCase):
+
+    def setUp(self):
+        self.cliente = Cliente.objects.create(
+            nome='João Silva',
+            cpfCnpj='12345678901',
+            telefone='123456789',
+            email='joao@example.com',
+            endereco='Rua A, 123'
+        )
+        self.funcionario = Funcionario.objects.create(
+            nome='Maria Souza',
+            cpf='10987654321',
+            senha='senha321',
+            telefone='987654321',
+            email='maria@example.com',
+            endereco='Rua B, 456'
+        )
+        self.pedido = Pedido.objects.create(
+            codCliente=self.cliente,
+            codFuncionario=self.funcionario,
+            forneceMaterial=True,
+            observacoes='Entregar até 12h',
+            status='P',
+            valorAdicional=50.0,
+            desconto=10.0,
+            formaPagamento='Cartão de Crédito'
+        )
+        self.produto = Produto.objects.create(
+            descricao='Camiseta Preta',
+            valor=30.0
+        )
+        self.pedido_produto = PedidoProduto.objects.create(
+            codPedido=self.pedido,
+            codProduto=self.produto,
+            quantidade=3
+        )
+
+    def test_pedido_produto_creation(self):
+        pedido_produto = PedidoProduto.objects.get(pk=self.pedido_produto.pk)
+        self.assertEqual(pedido_produto.codPedido, self.pedido)
+        self.assertEqual(pedido_produto.codProduto, self.produto)
+        self.assertEqual(pedido_produto.quantidade, 3)
+
+    def test_str_method(self):
+        expected_str = f'{self.pedido.cod} - {self.produto.descricao} ({self.pedido_produto.quantidade})'
+        self.assertEqual(str(self.pedido_produto), expected_str)
+
+class PedidoProdutoSerializerTest(APITestCase):
+
+    def setUp(self):
+        self.cliente = Cliente.objects.create(
+            nome='João Silva',
+            cpfCnpj='12345678901',
+            telefone='123456789',
+            email='joao@example.com',
+            endereco='Rua A, 123'
+        )
+        self.funcionario = Funcionario.objects.create(
+            nome='Maria Souza',
+            cpf='10987654321',
+            senha='senha321',
+            telefone='987654321',
+            email='maria@example.com',
+            endereco='Rua B, 456'
+        )
+        self.pedido = Pedido.objects.create(
+            codCliente=self.cliente,
+            codFuncionario=self.funcionario,
+            forneceMaterial=True,
+            observacoes='Entregar até 12h',
+            status='P',
+            valorAdicional=50.0,
+            desconto=10.0,
+            formaPagamento='Cartão de Crédito'
+        )
+        self.produto = Produto.objects.create(
+            descricao='Camiseta Preta',
+            valor=30.0
+        )
+        self.pedido_produto = PedidoProduto.objects.create(
+            codPedido=self.pedido,
+            codProduto=self.produto,
+            quantidade=3
+        )
+        self.serializer = PedidoProdutoSerializer(instance=self.pedido_produto)
+
+    def test_contains_expected_fields(self):
+        data = self.serializer.data
+        self.assertEqual(set(data.keys()), set(['codPedido', 'codProduto', 'quantidade']))
+
+    def test_codPedido_field_content(self):
+        data = self.serializer.data
+        self.assertEqual(data['codPedido'], self.pedido.pk)
+
+    def test_codProduto_field_content(self):
+        data = self.serializer.data
+        self.assertEqual(data['codProduto'], self.produto.pk)
+
+    def test_quantidade_field_content(self):
+        data = self.serializer.data
+        self.assertEqual(data['quantidade'], 3)
+
+    def test_create_pedido_produto(self):
+        new_produto = Produto.objects.create(
+            descricao='Calça Jeans',
+            valor=49.99
+        )
+        new_pedido = Pedido.objects.create(
+            codCliente=self.cliente,
+            codFuncionario=self.funcionario,
+            forneceMaterial=False,
+            observacoes='Nenhuma',
+            status='P',
+            valorAdicional=15.00,
+            desconto=7.00,
+            formaPagamento='Dinheiro'
+        )
+        data = {
+            'codPedido': new_pedido.cod,
+            'codProduto': new_produto.cod,
+            'quantidade': 3
+        }
+        serializer = PedidoProdutoSerializer(data=data)
+        self.assertTrue(serializer.is_valid(), serializer.errors) 
+        pedido_produto = serializer.save()
+        self.assertEqual(PedidoProduto.objects.count(), 2)
+        self.assertEqual(pedido_produto.codPedido, new_pedido)
+        self.assertEqual(pedido_produto.codProduto, new_produto)
+        self.assertEqual(pedido_produto.quantidade, data['quantidade'])
+
+class PedidoProdutoViewTest(APITestCase):
+
+    def setUp(self):
+        self.factory = APIRequestFactory()
+        self.view = PedidoProdutoView.as_view()
+        self.cliente = Cliente.objects.create(
+            nome='João Silva',
+            cpfCnpj='12345678901',
+            telefone='123456789',
+            email='joao@example.com',
+            endereco='Rua A, 123'
+        )
+        self.funcionario = Funcionario.objects.create(
+            nome='Maria Souza',
+            cpf='10987654321',
+            senha='senha321',
+            telefone='987654321',
+            email='maria@example.com',
+            endereco='Rua B, 456'
+        )
+        self.pedido = Pedido.objects.create(
+            codCliente=self.cliente,
+            codFuncionario=self.funcionario,
+            forneceMaterial=True,
+            observacoes='Entregar até 12h',
+            status='P',
+            valorAdicional=50.0,
+            desconto=10.0,
+            formaPagamento='Cartão de Crédito'
+        )
+        self.produto = Produto.objects.create(
+            descricao='Camiseta Preta',
+            valor=30.0
+        )
+        self.pedido_produto = PedidoProduto.objects.create(
+            codPedido=self.pedido,
+            codProduto=self.produto,
+            quantidade=3
+        )
+
+    def test_get_all_pedido_produtos(self):
+        request = self.factory.get('/pedidoproduto/')
+        response = self.view(request)
+        pedido_produtos = PedidoProduto.objects.all()
+        serializer = PedidoProdutoSerializer(pedido_produtos, many=True)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data, serializer.data)
+
+    def test_get_empty_list(self):
+        # Remove todos os objetos para testar a resposta vazia
+        PedidoProduto.objects.all().delete()
+        request = self.factory.get('/pedidoproduto/')
+        response = self.view(request)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data, [])
