@@ -1,9 +1,9 @@
 from rest_framework.views import APIView
 from rest_framework import status
 
-from .serializers import FuncionarioSerializer, MaterialSerializer, ProdutoSerializer, MaterialProdutoSerializer, ClienteSerializer, PedidoSerializer
+from .serializers import FuncionarioSerializer, MaterialSerializer, ProdutoSerializer, MaterialProdutoSerializer, ClienteSerializer, PedidoSerializer, PedidoProdutoSerializer
 from django.http import JsonResponse
-from .models import Funcionario, Material, Produto, MaterialProduto, Cliente, Pedido
+from .models import Funcionario, Material, Produto, MaterialProduto, Cliente, Pedido, PedidoProduto
 
 from django.http import Http404
 from rest_framework.response import Response
@@ -234,3 +234,10 @@ class PedidoView(APIView):
         
         pedido.delete()
         return Response({"detail": "Pedido deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
+    
+class PedidoProdutoView(APIView):
+
+    def get(self, request):
+        pedidoProdutos = PedidoProduto.objects.all()
+        serializer = PedidoProdutoSerializer(pedidoProdutos, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
