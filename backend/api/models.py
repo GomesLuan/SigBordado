@@ -65,7 +65,7 @@ class Pedido(models.Model):
     formaPagamento = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.cod
+        return str(self.cod)
     
 class PedidoProduto(models.Model):
     codPedido = models.ForeignKey(Pedido, on_delete=models.CASCADE)
