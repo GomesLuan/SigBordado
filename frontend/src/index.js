@@ -20,6 +20,7 @@ root.render(
 
       <Routes>
         <Route path="/funcionario" element={<App />} />
+        <Route path="/material" element={<App />} />
         {/* Adicione outras rotas aqui */}
       </Routes>
     </div>

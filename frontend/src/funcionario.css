@@ -94,16 +94,23 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: white;
+  background-color: rgba(50, 152, 118, 0.785);
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: 10px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative; /* Necessário para posicionar o conteúdo adicional */
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
 .list-item:hover {
   transform: scale(1.03);
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+  background-color: #5cd15fd8; /* Cor verde sólida ao passar o mouse */
+}
+
+.list-item:hover .info-overlay {
+  opacity: 1;
+  visibility: visible;
 }
 
 .list-item-field {
@@ -111,6 +118,7 @@
   text-align: center;
   font-weight: bold;
   color: #333;
+  transition: color 0.3s ease;
 }
 
 .list-item-field:not(:last-child) {
@@ -125,6 +133,23 @@
 .list-item-field:last-child {
   padding-right: 15px; /* Espaço à direita no último campo */
 }
+
+.info-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 18px;
+  color: white; /* Texto branco para contraste com o fundo verde */
+  font-weight: bold;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  background-color: rgba(55, 210, 169, 0.927); /* Fundo semitransparente para melhor legibilidade */
+  padding: 10px;
+  border-radius: 5px;
+}
+
 
 
 .dialog {

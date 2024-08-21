@@ -51,6 +51,7 @@ function App() {
       <div className="list-item-field">{funcionario.nome}</div>
       <div className="list-item-field">{funcionario.email}</div>
       <div className="list-item-field">{funcionario.telefone}</div>
+      <div className="info-overlay">Mais informações</div>
     </div>
     ));
 
