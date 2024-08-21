@@ -228,6 +228,8 @@ function App() {
           {rightColumnContent}
         </div>
       </div>
+      {/* Overlay escurecido */}
+      {dialogContent && <div className="overlay"></div>}
       {dialogContent}
     </div>
   );

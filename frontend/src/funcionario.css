@@ -235,3 +235,15 @@ form button {
 form button:hover {
   background-color: #0056b3;
 }
+
+/* Overlay escurecido */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fundo escuro semitransparente */
+  z-index: 999; /* Certifique-se de que o overlay fique acima de outros elementos */
+}
+
