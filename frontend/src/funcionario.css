@@ -83,41 +83,49 @@
   background-color: #0056b3;
 }
 
-.card-container {
+/* Estilização da lista de funcionários */
+.list-container {
   display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
+  flex-direction: column;
+  gap: 10px; /* Espaçamento entre as linhas da lista */
 }
 
-.card {
-  width: calc(33.33% - 20px);
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background-color: white;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  cursor: pointer;
+  padding: 10px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.card:hover {
+.list-item:hover {
   transform: scale(1.03);
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
 }
 
-.card img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-bottom: 2px solid #eee;
-}
-
-.card p {
-  padding: 10px;
+.list-item-field {
+  flex: 1;
   text-align: center;
   font-weight: bold;
   color: #333;
-  background-color: #f9f9f9;
 }
+
+.list-item-field:not(:last-child) {
+  border-right: 1px solid #ddd; /* Barra divisória entre os campos */
+  padding-right: 15px; /* Espaço à direita antes da linha divisória */
+}
+
+.list-item-field:first-child {
+  padding-left: 15px; /* Espaço à esquerda no primeiro campo */
+}
+
+.list-item-field:last-child {
+  padding-right: 15px; /* Espaço à direita no último campo */
+}
+
 
 .dialog {
   position: fixed;

@@ -46,18 +46,19 @@ function App() {
 
   const renderizarFuncionarios = (funcionariosParaRenderizar) => {
     // Renderiza os cartões de funcionários com base na lista fornecida
-    const cardsFuncionarios = funcionariosParaRenderizar.map((funcionario) => (
-      <div key={funcionario.cod} className="card" onClick={() => handleCardClick(funcionario)}>
-        <img src={funcionario.image} alt={`Imagem de ${funcionario.nome}`} />
-        <p>{funcionario.nome}</p>
-      </div>
+    const listarFuncionarios = funcionariosParaRenderizar.map((funcionario) => (
+    <div key={funcionario.cod} className="list-item" onClick={() => handleCardClick(funcionario)}>
+      <div className="list-item-field">{funcionario.nome}</div>
+      <div className="list-item-field">{funcionario.email}</div>
+      <div className="list-item-field">{funcionario.telefone}</div>
+    </div>
     ));
 
     setRightColumnContent(
       <div>
         <h2>Listar Funcionários</h2>
-        <div className="card-container">
-          {cardsFuncionarios}
+        <div className="list-container">
+          {listarFuncionarios}
         </div>
       </div>
     );
@@ -163,7 +164,7 @@ function App() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    console.log(event);
     try {
       if (funcionario) {
         const updatedFuncionario = await updateFuncionario(funcionario.cod, formData);
@@ -182,7 +183,7 @@ function App() {
       // Volta para a lista de funcionários após salvar
       handleClick('Listar Funcionários');
     } catch (error) {
-      alert('Erro ao salvar funcionário');
+      alert('Erro ao salvar funcionário(catch):');
     }
   };
 
