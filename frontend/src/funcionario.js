@@ -147,11 +147,22 @@ function App() {
   };
 
   const renderizarItens = (itensParaRenderizar) => {
-    const cards = itensParaRenderizar.map((item) => (
-      <div key={item.cod} className="card" onClick={() => handleCardClick(item)}>
-        <p>{item.nome || item.descricao}</p>
-      </div>
-    ));
+    const cards = itensParaRenderizar.map((item) => {
+      let textoCard;
+  
+      if (crudAtivo === 'pedido') {
+        textoCard = `Pedido #${item.cod}`; // Exibe o código do pedido
+      } else {
+        // Para funcionário, cliente ou produto, exibe o campo nome ou descrição
+        textoCard = item.nome || item.descricao;
+      }
+  
+      return (
+        <div key={item.cod} className="card" onClick={() => handleCardClick(item)}>
+          <p>{textoCard}</p>
+        </div>
+      );
+    });
 
     setRightColumnContent(
       <div>
