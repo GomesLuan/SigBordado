@@ -195,12 +195,14 @@ function App() {
   };
 
   const handleCardClick = (item) => {
-    const campos = functionsMap[crudAtivo].modelo.campos.map((campo) => (
-      <p key={campo.name}>
-        <strong>{campo.label}:</strong> {item[campo.name]}
-      </p>
-    ));
-
+    const campos = functionsMap[crudAtivo].modelo.campos
+      .filter((campo) => !(crudAtivo === 'funcionario' && campo.name === 'senha')) // Filtra o campo de senha se for funcionário
+      .map((campo) => (
+        <p key={campo.name}>
+          <strong>{campo.label}:</strong> {item[campo.name]}
+        </p>
+      ));
+  
     setItemSelecionado(item);
     setDialogContent(
       <div className="dialog">
