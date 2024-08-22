@@ -65,4 +65,15 @@ class Pedido(models.Model):
     formaPagamento = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.cod
+        return str(self.cod)
+    
+class PedidoProduto(models.Model):
+    codPedido = models.ForeignKey(Pedido, on_delete=models.CASCADE)
+    codProduto = models.ForeignKey(Produto, on_delete=models.CASCADE)
+    quantidade = models.IntegerField()
+
+    class Meta:
+        unique_together = (('codPedido', 'codProduto'))
+
+    def __str__(self):
+        return f'{self.codPedido} - {self.codProduto.descricao} ({self.quantidade})'

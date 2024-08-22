@@ -6,14 +6,40 @@ import {
   updateFuncionario,
   deleteFuncionario,
 } from './funcionarioService';
+import {
+  fetchClientes,
+  createCliente,
+  updateCliente,
+  deleteCliente,
+} from './clienteService';
+import {
+  fetchPedidos,
+  createPedido,
+  updatePedido,
+  deletePedido,
+} from './pedidoService';
+import {
+  fetchMateriais,
+  createMaterial,
+  updateMaterial,
+  deleteMaterial,
+} from './materialService';
+import {
+  fetchProdutos,
+  createProduto,
+  updateProduto,
+  deleteProduto,
+} from './produtoService'; // Serviços para produtos
 import { FormularioGenerico } from './formulario';
+
 function App() {
   const [rightColumnContent, setRightColumnContent] = useState(null);
   const [dialogContent, setDialogContent] = useState(null);
-  const [funcionarioSelecionado, setFuncionarioSelecionado] = useState(null);
-  const [funcionarios, setFuncionarios] = useState([]);
+  const [itemSelecionado, setItemSelecionado] = useState(null);
+  const [itens, setItens] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  
+  const [crudAtivo, setCrudAtivo] = useState('funcionario'); // Define se o CRUD é de funcionário, cliente ou produto
+
   const modeloFuncionario = {
     campos: [
       { name: 'nome', label: 'Nome', type: 'text', readOnly: false },
@@ -25,148 +51,234 @@ function App() {
       { name: 'endereco', label: 'Endereço', type: 'text', readOnly: false },
     ],
   };
+  const modeloMaterial = {
+    campos: [
+      { name: 'descricao', label: 'Descrição', type: 'text', readOnly: false },
+      { name: 'quantEst', label: 'Quantidade em Estoque', type: 'number', readOnly: false },
+    ],
+  };
+  const modeloCliente = {
+    campos: [
+      { name: 'nome', label: 'Nome', type: 'text', readOnly: false },
+      { name: 'cpfCnpj', label: 'CPF/CNPJ', type: 'text', readOnly: false },
+      { name: 'email', label: 'Email', type: 'email', readOnly: false },
+      { name: 'telefone', label: 'Telefone', type: 'text', readOnly: false },
+      { name: 'endereco', label: 'Endereço', type: 'text', readOnly: false },
+    ],
+  };
+
+  const modeloProduto = {
+    campos: [
+      { name: 'descricao', label: 'Descrição', type: 'text', readOnly: false },
+      { name: 'valor', label: 'Valor Unitário', type: 'number', readOnly: false },
+    ],
+  };
+  const modeloPedido = {
+    campos: [
+      { name: 'codCliente', label: 'Código do Cliente', type: 'number', readOnly: false },
+      { name: 'codFuncionario', label: 'Código do Funcionário', type: 'number', readOnly: false },
+      { name: 'forneceMaterial', label: 'Fornece Material?', type: 'checkbox', readOnly: false },
+      { name: 'observacoes', label: 'Observações', type: 'text', readOnly: false },
+      { name: 'status', label: 'Status', type: 'text', readOnly: false },
+      { name: 'valorAdicional', label: 'Valor Adicional', type: 'number', readOnly: false },
+      { name: 'desconto', label: 'Desconto (%)', type: 'number', readOnly: false },
+      { name: 'formaPagamento', label: 'Forma de Pagamento', type: 'text', readOnly: false },
+    ],
+  };
+  const functionsMap = {
+    funcionario: {
+      fetch: fetchFuncionarios,
+      create: createFuncionario,
+      update: updateFuncionario,
+      delete: deleteFuncionario,
+      modelo: modeloFuncionario,
+    },
+    cliente: {
+      fetch: fetchClientes,
+      create: createCliente,
+      update: updateCliente,
+      delete: deleteCliente,
+      modelo: modeloCliente,
+    },
+    produto: {
+      fetch: fetchProdutos,
+      create: createProduto,
+      update: updateProduto,
+      delete: deleteProduto,
+      modelo: modeloProduto,
+    },
+    pedido: {
+      fetch: fetchPedidos,
+      create: createPedido,
+      update: updatePedido,
+      delete: deletePedido,
+      modelo: modeloPedido,
+    },
+    material: {
+      fetch: fetchMateriais,
+      create: createMaterial,
+      update: updateMaterial,
+      delete: deleteMaterial,
+      modelo: modeloMaterial,
+    },
+  };
+
   useEffect(() => {
-    // Função para carregar a lista de funcionários ao montar o componente
-    const loadFuncionarios = async () => {
+    const loadItems = async () => {
       try {
-        const funcionariosData = await fetchFuncionarios();
-        setFuncionarios(funcionariosData);
+        const data = await functionsMap[crudAtivo].fetch();
+        setItens(data);
+        renderizarItens(data);
       } catch (error) {
-        setRightColumnContent(<p>Erro ao carregar funcionários.</p>);
+        setRightColumnContent(<p>Erro ao carregar {crudAtivo}s.</p>);
       }
     };
 
-    loadFuncionarios();
-  }, []); // Executa apenas uma vez ao montar o componente
+    loadItems();
+  }, [crudAtivo]);
 
-  const handleClick = async (text) => {
-    if (text === 'Criar Funcionário') {
-      setFuncionarioSelecionado(null); // Limpa o funcionário selecionado ao criar novo
+  const handleClick = (text) => {
+    if (text === 'Criar') {
+      setItemSelecionado(null);
       setRightColumnContent(
         <div>
-          <h2>Criar Funcionário</h2>
+          <h2>Criar {crudAtivo}</h2>
           <FormularioGenerico 
-          modeloClasse={modeloFuncionario} 
-          handleSubmitCallback={createFuncionario}
+            modeloClasse={functionsMap[crudAtivo].modelo} 
+            handleSubmitCallback={functionsMap[crudAtivo].create}
           />
         </div>
       );
-    } else if (text === 'Listar Funcionários') {
-      renderizarFuncionarios(funcionarios); // Renderiza a lista completa de funcionários
+    } else if (text === `Listar ${crudAtivo}s`) {
+      renderizarItens(itens);
+    } else if (text === 'Mudar para Cliente') {
+      setCrudAtivo('cliente');
+    }else if (text === 'Mudar para Pedido') {
+        setCrudAtivo('pedido');
+    } else if (text === 'Mudar para Funcionário') {
+      setCrudAtivo('funcionario');
+    } else if (text === 'Mudar para Produto') {
+      setCrudAtivo('produto');
+    } else if (text === 'Mudar para Material') {
+      setCrudAtivo('material');
     } else {
       alert(`Você clicou em: ${text}`);
     }
   };
 
-  const renderizarFuncionarios = (funcionariosParaRenderizar) => {
-    // Renderiza os cartões de funcionários com base na lista fornecida
-    const cardsFuncionarios = funcionariosParaRenderizar.map((funcionario) => (
-      <div key={funcionario.cod} className="card" onClick={() => handleCardClick(funcionario)}>
-        <img src={funcionario.image} alt={`Imagem de ${funcionario.nome}`} />
-        <p>{funcionario.nome}</p>
-      </div>
-    ));
+  const renderizarItens = (itensParaRenderizar) => {
+    const cards = itensParaRenderizar.map((item) => {
+      let textoCard;
+  
+      if (crudAtivo === 'pedido') {
+        textoCard = `Pedido #${item.cod}`; // Exibe o código do pedido
+      } else {
+        // Para funcionário, cliente ou produto, exibe o campo nome ou descrição
+        textoCard = item.nome || item.descricao;
+      }
+  
+      return (
+        <div key={item.cod} className="card" onClick={() => handleCardClick(item)}>
+          <p>{textoCard}</p>
+        </div>
+      );
+    });
 
     setRightColumnContent(
       <div>
-        <h2>Listar Funcionários</h2>
+        <h2>Listar {crudAtivo}s</h2>
         <div className="card-container">
-          {cardsFuncionarios}
+          {cards}
         </div>
       </div>
     );
   };
 
-  const handleCardClick = (funcionario) => {
-    const campos = modeloFuncionario.campos.map((campo) => (
+  const handleCardClick = (item) => {
+    const campos = functionsMap[crudAtivo].modelo.campos.map((campo) => (
       <p key={campo.name}>
-        <strong>{campo.label}:</strong> {funcionario[campo.name]}
+        <strong>{campo.label}:</strong> {item[campo.name]}
       </p>
     ));
-  
-    setFuncionarioSelecionado(funcionario); // Armazena o funcionário selecionado
+
+    setItemSelecionado(item);
     setDialogContent(
       <div className="dialog">
-        <h3>{funcionario.nome}</h3>
+        <h3>{item.nome || item.descricao}</h3>
         {campos}
         <button className='close' onClick={() => setDialogContent(null)}>Fechar</button>
-        <button className='edit' onClick={() => handleEditClick(funcionario)}>Editar</button>
-        <button className='delete' onClick={() => handleDeleteClick(funcionario.cod)}>Deletar</button>
+        <button className='edit' onClick={() => handleEditClick(item)}>Editar</button>
+        <button className='delete' onClick={() => handleDeleteClick(item.cod)}>Deletar</button>
       </div>
     );
   };
 
-  const handleEditClick = (funcionario) => {
-    setDialogContent(null); // Fecha o diálogo
+  const handleEditClick = (item) => {
+    setDialogContent(null);
     setRightColumnContent(
       <div>
-        <h2>Editar Funcionário</h2>
+        <h2>Editar {crudAtivo}</h2>
         <FormularioGenerico 
-        modeloClasse={modeloFuncionario}
-        dadosIniciais={funcionario}
-        handleSubmitCallback={updateFuncionario}
+          modeloClasse={functionsMap[crudAtivo].modelo}
+          dadosIniciais={item}
+          handleSubmitCallback={functionsMap[crudAtivo].update}
         />
       </div>
     );
   };
 
-  const handleDeleteClick = async (codigoFuncionario) => {
-    const confirmDelete = window.confirm('Tem certeza que deseja deletar este funcionário?');
+  const handleDeleteClick = async (codigoItem) => {
+    const confirmDelete = window.confirm('Tem certeza que deseja deletar este item?');
     if (!confirmDelete) {
       return;
     }
 
     try {
-      await deleteFuncionario(codigoFuncionario);
+      await functionsMap[crudAtivo].delete(codigoItem);
 
-      console.log('Funcionário deletado com sucesso');
-      alert('Funcionário deletado com sucesso!');
+      alert(`${crudAtivo.charAt(0).toUpperCase() + crudAtivo.slice(1)} deletado com sucesso!`);
 
       setDialogContent(null);
 
-      // Atualiza a lista de funcionários após a exclusão
-      const updatedFuncionarios = funcionarios.filter(
-        (funcionario) => funcionario.cod !== codigoFuncionario
-      );
-      setFuncionarios(updatedFuncionarios);
-      renderizarFuncionarios(updatedFuncionarios);
+      const updatedItens = itens.filter((item) => item.cod !== codigoItem);
+      setItens(updatedItens);
+      renderizarItens(updatedItens);
     } catch (error) {
-      console.error('Erro ao deletar funcionário:', error);
-      alert('Erro ao deletar funcionário');
+      alert(`Erro ao deletar ${crudAtivo}`);
     }
   };
 
   const handleSearchChange = (event) => {
-    // Atualiza o termo de pesquisa e filtra a lista de funcionários
     const term = event.target.value.toLowerCase();
     setSearchTerm(term);
-    const filteredFuncionarios = funcionarios.filter((funcionario) =>
-      Object.values(funcionario).some((value) =>
+    const filteredItens = itens.filter((item) =>
+      Object.values(item).some((value) =>
         String(value).toLowerCase().includes(term)
       )
     );
-    renderizarFuncionarios(filteredFuncionarios);
+    renderizarItens(filteredItens);
   };
-
-
 
   return (
     <div className="App">
       <header className="header">
-        <h1>Funcionários</h1>
+        <h1>{crudAtivo.charAt(0).toUpperCase() + crudAtivo.slice(1)}s</h1>
         <input
           type="text"
-          placeholder="Buscar funcionário..."
+          placeholder={`Buscar ${crudAtivo}...`}
           value={searchTerm}
           onChange={handleSearchChange}
         />
       </header>
       <div className="container">
         <div className="column column-left">
-          <p onClick={() => handleClick('Criar Funcionário')}>Criar Funcionário</p>
-          <p onClick={() => handleClick('Listar Funcionários')}>Listar Funcionários</p>
-          <p onClick={() => handleClick('Texto 3')}>Texto 3</p>
-          {/* Adicione mais textos clicáveis conforme necessário */}
+          <p onClick={() => handleClick('Criar')}>Criar {crudAtivo}</p>
+          <p onClick={() => handleClick(`Listar ${crudAtivo}s`)}>Listar {crudAtivo}s</p>
+          <p onClick={() => handleClick('Mudar para Cliente')}>Mudar para Cliente</p>
+          <p onClick={() => handleClick('Mudar para Funcionário')}>Mudar para Funcionário</p>
+          <p onClick={() => handleClick('Mudar para Produto')}>Mudar para Produto</p>
+          <p onClick={() => handleClick('Mudar para Pedido')}>Mudar para Pedido</p>
+          <p onClick={() => handleClick('Mudar para Material')}>Mudar para Material</p>
         </div>
         <div className="column column-right">
           {rightColumnContent}
