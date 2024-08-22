@@ -19,6 +19,12 @@ import {
   deletePedido,
 } from './pedidoService';
 import {
+  fetchMateriais,
+  createMaterial,
+  updateMaterial,
+  deleteMaterial,
+} from './materialService';
+import {
   fetchProdutos,
   createProduto,
   updateProduto,
@@ -45,7 +51,12 @@ function App() {
       { name: 'endereco', label: 'Endereço', type: 'text', readOnly: false },
     ],
   };
-
+  const modeloMaterial = {
+    campos: [
+      { name: 'descricao', label: 'Descrição', type: 'text', readOnly: false },
+      { name: 'quantEst', label: 'Quantidade em Estoque', type: 'number', readOnly: false },
+    ],
+  };
   const modeloCliente = {
     campos: [
       { name: 'nome', label: 'Nome', type: 'text', readOnly: false },
@@ -103,6 +114,13 @@ function App() {
       delete: deletePedido,
       modelo: modeloPedido,
     },
+    material: {
+      fetch: fetchMateriais,
+      create: createMaterial,
+      update: updateMaterial,
+      delete: deleteMaterial,
+      modelo: modeloMaterial,
+    },
   };
 
   useEffect(() => {
@@ -141,6 +159,8 @@ function App() {
       setCrudAtivo('funcionario');
     } else if (text === 'Mudar para Produto') {
       setCrudAtivo('produto');
+    } else if (text === 'Mudar para Material') {
+      setCrudAtivo('material');
     } else {
       alert(`Você clicou em: ${text}`);
     }
@@ -258,6 +278,7 @@ function App() {
           <p onClick={() => handleClick('Mudar para Funcionário')}>Mudar para Funcionário</p>
           <p onClick={() => handleClick('Mudar para Produto')}>Mudar para Produto</p>
           <p onClick={() => handleClick('Mudar para Pedido')}>Mudar para Pedido</p>
+          <p onClick={() => handleClick('Mudar para Material')}>Mudar para Material</p>
         </div>
         <div className="column column-right">
           {rightColumnContent}
