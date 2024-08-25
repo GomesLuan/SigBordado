@@ -1,35 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './funcionario.css';
-import {
-  fetchFuncionarios,
-  createFuncionario,
-  updateFuncionario,
-  deleteFuncionario,
-} from './funcionarioService';
-import {
-  fetchClientes,
-  createCliente,
-  updateCliente,
-  deleteCliente,
-} from './clienteService';
-import {
-  fetchPedidos,
-  createPedido,
-  updatePedido,
-  deletePedido,
-} from './pedidoService';
-import {
-  fetchMateriais,
-  createMaterial,
-  updateMaterial,
-  deleteMaterial,
-} from './materialService';
-import {
-  fetchProdutos,
-  createProduto,
-  updateProduto,
-  deleteProduto,
-} from './produtoService'; // Serviços para produtos
+import { functionsMap } from './models';  
 import { FormularioGenerico } from './formulario';
 
 function App() {
@@ -38,97 +9,13 @@ function App() {
   const [itemSelecionado, setItemSelecionado] = useState(null);
   const [itens, setItens] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [crudAtivo, setCrudAtivo] = useState('funcionario'); // Define se o CRUD é de funcionário, cliente ou produto
-
-  const modeloFuncionario = {
-    campos: [
-      { name: 'nome', label: 'Nome', type: 'text', readOnly: false },
-      { name: 'cpf', label: 'CPF', type: 'text', readOnly: false },
-      { name: 'senha', label: 'Senha', type: 'password', readOnly: false },
-      { name: 'rg', label: 'RG', type: 'text', readOnly: false },
-      { name: 'email', label: 'Email', type: 'email', readOnly: false },
-      { name: 'telefone', label: 'Telefone', type: 'text', readOnly: false },
-      { name: 'endereco', label: 'Endereço', type: 'text', readOnly: false },
-    ],
-  };
-  const modeloMaterial = {
-    campos: [
-      { name: 'descricao', label: 'Descrição', type: 'text', readOnly: false },
-      { name: 'quantEst', label: 'Quantidade em Estoque', type: 'number', readOnly: false },
-    ],
-  };
-  const modeloCliente = {
-    campos: [
-      { name: 'nome', label: 'Nome', type: 'text', readOnly: false },
-      { name: 'cpfCnpj', label: 'CPF/CNPJ', type: 'text', readOnly: false },
-      { name: 'email', label: 'Email', type: 'email', readOnly: false },
-      { name: 'telefone', label: 'Telefone', type: 'text', readOnly: false },
-      { name: 'endereco', label: 'Endereço', type: 'text', readOnly: false },
-    ],
-  };
-
-  const modeloProduto = {
-    campos: [
-      { name: 'descricao', label: 'Descrição', type: 'text', readOnly: false },
-      { name: 'valor', label: 'Valor Unitário', type: 'number', readOnly: false },
-    ],
-  };
-  const modeloPedido = {
-    campos: [
-      { name: 'codCliente', label: 'Código do Cliente', type: 'number', readOnly: false },
-      { name: 'codFuncionario', label: 'Código do Funcionário', type: 'number', readOnly: false },
-      { name: 'forneceMaterial', label: 'Fornece Material?', type: 'checkbox', readOnly: false },
-      { name: 'observacoes', label: 'Observações', type: 'text', readOnly: false },
-      { name: 'status', label: 'Status', type: 'text', readOnly: false },
-      { name: 'valorAdicional', label: 'Valor Adicional', type: 'number', readOnly: false },
-      { name: 'desconto', label: 'Desconto (%)', type: 'number', readOnly: false },
-      { name: 'formaPagamento', label: 'Forma de Pagamento', type: 'text', readOnly: false },
-    ],
-  };
-  const functionsMap = {
-    funcionario: {
-      fetch: fetchFuncionarios,
-      create: createFuncionario,
-      update: updateFuncionario,
-      delete: deleteFuncionario,
-      modelo: modeloFuncionario,
-    },
-    cliente: {
-      fetch: fetchClientes,
-      create: createCliente,
-      update: updateCliente,
-      delete: deleteCliente,
-      modelo: modeloCliente,
-    },
-    produto: {
-      fetch: fetchProdutos,
-      create: createProduto,
-      update: updateProduto,
-      delete: deleteProduto,
-      modelo: modeloProduto,
-    },
-    pedido: {
-      fetch: fetchPedidos,
-      create: createPedido,
-      update: updatePedido,
-      delete: deletePedido,
-      modelo: modeloPedido,
-    },
-    material: {
-      fetch: fetchMateriais,
-      create: createMaterial,
-      update: updateMaterial,
-      delete: deleteMaterial,
-      modelo: modeloMaterial,
-    },
-  };
+  const [crudAtivo, setCrudAtivo] = useState('funcionario');
 
   useEffect(() => {
     const loadItems = async () => {
       try {
         const data = await functionsMap[crudAtivo].fetch();
         setItens(data);
-        renderizarItens(data);
       } catch (error) {
         setRightColumnContent(<p>Erro ao carregar {crudAtivo}s.</p>);
       }
@@ -136,6 +23,14 @@ function App() {
 
     loadItems();
   }, [crudAtivo]);
+
+  useEffect(() => {
+    if (searchTerm === '') {
+      renderizarItens(itens);
+    } else {
+      handleSearch();
+    }
+  }, [searchTerm, itens]);
 
   const handleClick = (text) => {
     if (text === 'Criar') {
@@ -153,8 +48,8 @@ function App() {
       renderizarItens(itens);
     } else if (text === 'Mudar para Cliente') {
       setCrudAtivo('cliente');
-    }else if (text === 'Mudar para Pedido') {
-        setCrudAtivo('pedido');
+    } else if (text === 'Mudar para Pedido') {
+      setCrudAtivo('pedido');
     } else if (text === 'Mudar para Funcionário') {
       setCrudAtivo('funcionario');
     } else if (text === 'Mudar para Produto') {
@@ -171,9 +66,8 @@ function App() {
       let textoCard;
   
       if (crudAtivo === 'pedido') {
-        textoCard = `Pedido #${item.cod}`; // Exibe o código do pedido
+        textoCard = `Pedido #${item.cod}`;
       } else {
-        // Para funcionário, cliente ou produto, exibe o campo nome ou descrição
         textoCard = item.nome || item.descricao;
       }
   
@@ -196,7 +90,7 @@ function App() {
 
   const handleCardClick = (item) => {
     const campos = functionsMap[crudAtivo].modelo.campos
-      .filter((campo) => !(crudAtivo === 'funcionario' && campo.name === 'senha')) // Filtra o campo de senha se for funcionário
+      .filter((campo) => !(crudAtivo === 'funcionario' && campo.name === 'senha'))
       .map((campo) => (
         <p key={campo.name}>
           <strong>{campo.label}:</strong> {item[campo.name]}
@@ -246,47 +140,46 @@ function App() {
       setItens(updatedItens);
       renderizarItens(updatedItens);
     } catch (error) {
-      alert(`Erro ao deletar ${crudAtivo}`);
+      alert(`Erro ao deletar ${crudAtivo}.`);
     }
   };
 
-  const handleSearchChange = (event) => {
-    const term = event.target.value.toLowerCase();
-    setSearchTerm(term);
-    const filteredItens = itens.filter((item) =>
-      Object.values(item).some((value) =>
-        String(value).toLowerCase().includes(term)
-      )
+  const handleSearch = () => {
+    const filteredItems = itens.filter((item) =>
+      item.nome?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.descricao?.toLowerCase().includes(searchTerm.toLowerCase())
     );
-    renderizarItens(filteredItens);
+    renderizarItens(filteredItems);
   };
 
   return (
     <div className="App">
       <header className="header">
-        <h1>{crudAtivo.charAt(0).toUpperCase() + crudAtivo.slice(1)}s</h1>
+        <h1>Funcionários</h1>
         <input
           type="text"
-          placeholder={`Buscar ${crudAtivo}...`}
+          placeholder="Buscar..."
           value={searchTerm}
-          onChange={handleSearchChange}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
       </header>
-      <div className="container">
-        <div className="column column-left">
-          <p onClick={() => handleClick('Criar')}>Criar {crudAtivo}</p>
-          <p onClick={() => handleClick(`Listar ${crudAtivo}s`)}>Listar {crudAtivo}s</p>
-          <p onClick={() => handleClick('Mudar para Cliente')}>Mudar para Cliente</p>
-          <p onClick={() => handleClick('Mudar para Funcionário')}>Mudar para Funcionário</p>
-          <p onClick={() => handleClick('Mudar para Produto')}>Mudar para Produto</p>
-          <p onClick={() => handleClick('Mudar para Pedido')}>Mudar para Pedido</p>
-          <p onClick={() => handleClick('Mudar para Material')}>Mudar para Material</p>
+      <div className="main-content">
+        <div className="column-left">
+          <ul>
+            <li onClick={() => handleClick(`Listar ${crudAtivo}s`)}>Listar {crudAtivo}s</li>
+            <li onClick={() => handleClick('Criar')}>Criar {crudAtivo}</li>
+            <li onClick={() => handleClick('Mudar para Funcionário')}>Mudar para Funcionário</li>
+            <li onClick={() => handleClick('Mudar para Cliente')}>Mudar para Cliente</li>
+            <li onClick={() => handleClick('Mudar para Produto')}>Mudar para Produto</li>
+            <li onClick={() => handleClick('Mudar para Pedido')}>Mudar para Pedido</li>
+            <li onClick={() => handleClick('Mudar para Material')}>Mudar para Material</li>
+          </ul>
         </div>
-        <div className="column column-right">
+        <div className="column-right">
           {rightColumnContent}
+          {dialogContent}
         </div>
       </div>
-      {dialogContent}
     </div>
   );
 }
