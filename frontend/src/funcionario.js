@@ -40,7 +40,7 @@ function App() {
           <h2>Criar {crudAtivo}</h2>
           <FormularioGenerico 
             modeloClasse={functionsMap[crudAtivo].modelo} 
-            handleSubmitCallback={functionsMap[crudAtivo].create}
+            handleSubmitCallback={handleCreate}
           />
         </div>
       );
@@ -117,10 +117,34 @@ function App() {
         <FormularioGenerico 
           modeloClasse={functionsMap[crudAtivo].modelo}
           dadosIniciais={item}
-          handleSubmitCallback={functionsMap[crudAtivo].update}
+          handleSubmitCallback={handleUpdate}
         />
       </div>
     );
+  };
+
+  const handleCreate = async (data) => {
+    try {
+      await functionsMap[crudAtivo].create(data);
+      alert(`${crudAtivo.charAt(0).toUpperCase() + crudAtivo.slice(1)} criado com sucesso!`);
+      const updatedItens = await functionsMap[crudAtivo].fetch(); // Recarregar itens
+      setItens(updatedItens);
+      renderizarItens(updatedItens);
+    } catch (error) {
+      alert('Erro ao criar item!');
+    }
+  };
+
+  const handleUpdate = async (codigoItem, data) => {
+    try {
+      await functionsMap[crudAtivo].update(codigoItem, data);
+      alert(`${crudAtivo.charAt(0).toUpperCase() + crudAtivo.slice(1)} atualizado com sucesso!`);
+      const updatedItens = await functionsMap[crudAtivo].fetch(); // Recarregar itens
+      setItens(updatedItens);
+      renderizarItens(updatedItens);
+    } catch (error) {
+      alert('Erro ao atualizar item!');
+    }
   };
 
   const handleDeleteClick = async (codigoItem) => {
@@ -131,11 +155,7 @@ function App() {
 
     try {
       await functionsMap[crudAtivo].delete(codigoItem);
-
       alert(`${crudAtivo.charAt(0).toUpperCase() + crudAtivo.slice(1)} deletado com sucesso!`);
-
-      setDialogContent(null);
-
       const updatedItens = itens.filter((item) => item.cod !== codigoItem);
       setItens(updatedItens);
       renderizarItens(updatedItens);
