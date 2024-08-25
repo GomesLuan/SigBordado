@@ -12,7 +12,7 @@
 
 .header {
   background-color: #333;
-  color: white;
+  color: rgb(255, 255, 255);
   padding: 10px;
   display: flex;
   justify-content: space-between;
@@ -32,14 +32,14 @@
   border-radius: 20px;
   border: 1px solid #ccc;
   background-color: #fff;
-  color: #333;
+  color: #0a0404;
   font-size: 14px;
   transition: all 0.3s ease;
 }
 
 .header input[type="text"]:focus {
   outline: none;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 5px rgba(224, 179, 179, 0.2);
 }
 
 .main-content {
@@ -224,4 +224,34 @@ form button {
 form button:hover {
   background-color: #0056b3;
 }
+
+/* CSS para temas claros e escuros */
+
+body.light {
+  background-color: #0f0e0e;
+  color: #000000;
+}
+
+body.dark {
+  background-color: #333333;
+  color: #ffffff;
+}
+
+.column-left {
+  background-color: #f4f4f4;
+}
+
+.column-right {
+  background-color: #ffffff;
+}
+
+body.dark .column-left {
+  background-color: #222;
+}
+
+body.dark .column-right {
+  background-color: #444;
+}
+
+/* Manter outros estilos do tema escuro */
 

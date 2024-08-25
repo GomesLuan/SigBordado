@@ -10,6 +10,7 @@ function App() {
   const [itens, setItens] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [crudAtivo, setCrudAtivo] = useState('funcionario');
+  const [theme, setTheme] = useState('light'); // Adiciona estado para tema
 
   useEffect(() => {
     const loadItems = async () => {
@@ -31,6 +32,10 @@ function App() {
       handleSearch();
     }
   }, [searchTerm, itens]);
+
+  useEffect(() => {
+    document.body.className = theme; // Aplica a classe do tema ao body
+  }, [theme]);
 
   const handleClick = (text) => {
     if (text === 'Criar') {
@@ -172,6 +177,10 @@ function App() {
     renderizarItens(filteredItems);
   };
 
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+  };
+
   return (
     <div className="App">
       <header className="header">
@@ -182,6 +191,9 @@ function App() {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
+        <button onClick={toggleTheme} className="theme-toggle">
+          {theme === 'light' ? 'Modo Escuro' : 'Modo Claro'}
+        </button>
       </header>
       <div className="main-content">
         <div className="column-left">
@@ -190,8 +202,8 @@ function App() {
             <li onClick={() => handleClick('Criar')}>Criar {crudAtivo}</li>
             <li onClick={() => handleClick('Mudar para Funcionário')}>Mudar para Funcionário</li>
             <li onClick={() => handleClick('Mudar para Cliente')}>Mudar para Cliente</li>
-            <li onClick={() => handleClick('Mudar para Produto')}>Mudar para Produto</li>
             <li onClick={() => handleClick('Mudar para Pedido')}>Mudar para Pedido</li>
+            <li onClick={() => handleClick('Mudar para Produto')}>Mudar para Produto</li>
             <li onClick={() => handleClick('Mudar para Material')}>Mudar para Material</li>
           </ul>
         </div>
