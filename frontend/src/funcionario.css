@@ -60,6 +60,7 @@
 }
 
 .column-left ul li {
+  background-color: #e6e6dc7d;
   margin-bottom: 10px;
   cursor: pointer;
   font-size: 16px;
@@ -70,7 +71,7 @@
 
 .column-left ul li:hover {
   color: #ffffff;
-  background-color: #79a47b; /* Cor de fundo ao passar o cursor */
+  background-color: #c8dec9; /* Cor de fundo ao passar o cursor */
   box-shadow: 0 8px 15px rgba(46, 45, 45, 0.2);
   transform: translateY(-5px);
 }
@@ -302,7 +303,7 @@ body.dark .slider {
 }
 
 .dark .column-left ul li {
-  background-color: #444;
+  background-color: #4444448a;
   color: #e0e0e0;
 }
 
