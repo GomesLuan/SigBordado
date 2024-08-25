@@ -49,9 +49,9 @@
 
 .column-left {
   width: 20%;
-  background-color: #f4f4f4;
   padding: 20px;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .column-left ul {
@@ -63,17 +63,32 @@
   margin-bottom: 10px;
   cursor: pointer;
   font-size: 16px;
-  color: #333;
   padding: 10px;
   border-radius: 5px;
-  transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
+  transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s, color 0.3s;
 }
 
 .column-left ul li:hover {
-  color: #007bff;
-  background-color: #e9ecef; /* Cor de fundo ao passar o cursor */
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  color: #ffffff;
+  background-color: #79a47b; /* Cor de fundo ao passar o cursor */
+  box-shadow: 0 8px 15px rgba(46, 45, 45, 0.2);
   transform: translateY(-5px);
+}
+
+/* Temas claros e escuros */
+.light .column-left {
+  background-color: #f4f4f4;
+  color: #353434;
+}
+
+.dark .column-left {
+  background-color: #36373b;
+  color: #f4f4f4;
+}
+
+.dark .column-left ul li:hover {
+  background-color: #898b94;
+  color: #f4f4f4;
 }
 
 .column-right {
@@ -161,15 +176,15 @@
 }
 
 .dialog button.close:hover {
-  background-color: #c62828;
+  background-color: #0056b3;
 }
 
 .dialog button.edit:hover {
-  background-color: #e68900;
+  background-color: #0056b3;
 }
 
 .dialog button.delete:hover {
-  background-color: #757575;
+  background-color: #c62828;
 }
 
 form {
@@ -225,33 +240,78 @@ form button:hover {
   background-color: #0056b3;
 }
 
-/* CSS para temas claros e escuros */
+/* CSS para o seletor de tema claro e escuro */
 
-body.light {
-  background-color: #0f0e0e;
-  color: #000000;
+.theme-switcher {
+  position: relative;
+  width: 70px;
+  height: 25px;
 }
 
-body.dark {
-  background-color: #333333;
+.theme-switcher input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 20px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #5e6363;
+}
+
+input:checked + .slider:before {
+  transform: translateX(45px);
+}
+
+body.light .slider {
+  background-color: #dedbdb;
+}
+
+body.dark .slider {
+  background-color: #666;
+}
+
+/* Melhorias para o tema escuro */
+
+.dark .column-left {
+  background-color: #2c2c2c;
+  color: #e0e0e0;
+}
+
+.dark .column-left ul li {
+  background-color: #444;
+  color: #e0e0e0;
+}
+
+.dark .column-left ul li:hover {
+  background-color: #666;
   color: #ffffff;
 }
 
-.column-left {
-  background-color: #f4f4f4;
+.dark .column-right {
+  background-color: #202124;
+  color: #e0e0e0;
 }
-
-.column-right {
-  background-color: #ffffff;
-}
-
-body.dark .column-left {
-  background-color: #222;
-}
-
-body.dark .column-right {
-  background-color: #444;
-}
-
-/* Manter outros estilos do tema escuro */
-

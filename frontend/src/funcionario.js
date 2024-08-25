@@ -33,10 +33,6 @@ function App() {
     }
   }, [searchTerm, itens]);
 
-  useEffect(() => {
-    document.body.className = theme; // Aplica a classe do tema ao body
-  }, [theme]);
-
   const handleClick = (text) => {
     if (text === 'Criar') {
       setItemSelecionado(null);
@@ -182,7 +178,7 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div className={`App ${theme}`}>
       <header className="header">
         <h1>Funcionários</h1>
         <input
@@ -191,23 +187,28 @@ function App() {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <button onClick={toggleTheme} className="theme-toggle">
-          {theme === 'light' ? 'Modo Escuro' : 'Modo Claro'}
-        </button>
+        <div className="theme-switcher">
+          <input
+            type="checkbox"
+            id="theme-toggle"
+            checked={theme === 'dark'}
+            onChange={toggleTheme}
+          />
+          <label htmlFor="theme-toggle" className="slider"></label>
+        </div>
       </header>
       <div className="main-content">
-        <div className="column-left">
+        <div className={`column-left ${theme}`}>
           <ul>
             <li onClick={() => handleClick(`Listar ${crudAtivo}s`)}>Listar {crudAtivo}s</li>
-            <li onClick={() => handleClick('Criar')}>Criar {crudAtivo}</li>
-            <li onClick={() => handleClick('Mudar para Funcionário')}>Mudar para Funcionário</li>
+            <li onClick={() => handleClick('Criar')}>Criar</li>
             <li onClick={() => handleClick('Mudar para Cliente')}>Mudar para Cliente</li>
             <li onClick={() => handleClick('Mudar para Pedido')}>Mudar para Pedido</li>
             <li onClick={() => handleClick('Mudar para Produto')}>Mudar para Produto</li>
             <li onClick={() => handleClick('Mudar para Material')}>Mudar para Material</li>
           </ul>
         </div>
-        <div className="column-right">
+        <div className={`column-right ${theme}`}>
           {rightColumnContent}
           {dialogContent}
         </div>
