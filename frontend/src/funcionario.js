@@ -240,7 +240,7 @@ function App() {
               )}
             </li>
             <li onClick={() => handleClick('Mudar para Material')}>
-              Mudar para Produto
+              Mudar para Material
               {activeMenu === 'material' && (
                 <ul>
                   <li onClick={() => handleClick('Criar')}>Criar</li>
