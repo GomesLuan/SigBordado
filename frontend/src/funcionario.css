@@ -127,16 +127,26 @@
   background-color: #f9f9f9;
 }
 
-.dialog {
+.dialog-overlay {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fundo escurecido */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Garante que a sobreposição esteja acima do restante do conteúdo */
+}
+
+.dialog {
+  background-color: #fff; /* Fundo branco para o diálogo */
   padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  border-radius: 5px;
-  z-index: 1000;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 500px;
+  width: 100%;
 }
 
 .dialog h3 {
