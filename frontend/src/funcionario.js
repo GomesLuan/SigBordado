@@ -10,14 +10,17 @@ function App() {
   const [itens, setItens] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [crudAtivo, setCrudAtivo] = useState('funcionario');
-  const [theme, setTheme] = useState('light'); // Adiciona estado para tema
+  const [theme, setTheme] = useState('light');
+  const [activeMenu, setActiveMenu] = useState(''); // Novo estado para controlar a visibilidade das listas
 
   useEffect(() => {
     const loadItems = async () => {
       try {
+        console.log('Carregando itens para:', crudAtivo);
         const data = await functionsMap[crudAtivo].fetch();
         setItens(data);
       } catch (error) {
+        console.log('Erro ao carregar itens:', crudAtivo);
         setRightColumnContent(<p>Erro ao carregar {crudAtivo}s.</p>);
       }
     };
@@ -47,16 +50,16 @@ function App() {
       );
     } else if (text === `Listar ${crudAtivo}s`) {
       renderizarItens(itens);
-    } else if (text === 'Mudar para Cliente') {
-      setCrudAtivo('cliente');
-    } else if (text === 'Mudar para Pedido') {
-      setCrudAtivo('pedido');
-    } else if (text === 'Mudar para Funcionário') {
-      setCrudAtivo('funcionario');
-    } else if (text === 'Mudar para Produto') {
-      setCrudAtivo('produto');
-    } else if (text === 'Mudar para Material') {
-      setCrudAtivo('material');
+    } else if (text.startsWith('Mudar para')) {
+      const newCrud = text.split(' ')[2].toLowerCase(); // Obtém a nova funcionalidade
+      if (newCrud === activeMenu) {
+        // Se o menu já está ativo, ocultá-lo
+        setActiveMenu('');
+      } else {
+        // Caso contrário, mostrar o novo submenu
+        setCrudAtivo(newCrud);
+        setActiveMenu(newCrud); // Exibir o submenu correspondente
+      }
     } else {
       alert(`Você clicou em: ${text}`);
     }
@@ -65,13 +68,13 @@ function App() {
   const renderizarItens = (itensParaRenderizar) => {
     const cards = itensParaRenderizar.map((item) => {
       let textoCard;
-  
+
       if (crudAtivo === 'pedido') {
         textoCard = `Pedido #${item.cod}`;
       } else {
         textoCard = item.nome || item.descricao;
       }
-  
+
       return (
         <div key={item.cod} className="card" onClick={() => handleCardClick(item)}>
           <p>{textoCard}</p>
@@ -128,7 +131,7 @@ function App() {
     try {
       await functionsMap[crudAtivo].create(data);
       alert(`${crudAtivo.charAt(0).toUpperCase() + crudAtivo.slice(1)} criado com sucesso!`);
-      const updatedItens = await functionsMap[crudAtivo].fetch(); // Recarregar itens
+      const updatedItens = await functionsMap[crudAtivo].fetch();
       setItens(updatedItens);
       renderizarItens(updatedItens);
     } catch (error) {
@@ -140,7 +143,7 @@ function App() {
     try {
       await functionsMap[crudAtivo].update(codigoItem, data);
       alert(`${crudAtivo.charAt(0).toUpperCase() + crudAtivo.slice(1)} atualizado com sucesso!`);
-      const updatedItens = await functionsMap[crudAtivo].fetch(); // Recarregar itens
+      const updatedItens = await functionsMap[crudAtivo].fetch();
       setItens(updatedItens);
       renderizarItens(updatedItens);
     } catch (error) {
@@ -200,19 +203,62 @@ function App() {
       <div className="main-content">
         <div className={`column-left ${theme}`}>
           <ul>
-            <li onClick={() => handleClick(`Listar ${crudAtivo}s`)}>Listar {crudAtivo}s</li>
-            <li onClick={() => handleClick('Criar')}>Criar</li>
-            <li onClick={() => handleClick('Mudar para Cliente')}>Mudar para Cliente</li>
-            <li onClick={() => handleClick('Mudar para Pedido')}>Mudar para Pedido</li>
-            <li onClick={() => handleClick('Mudar para Produto')}>Mudar para Produto</li>
-            <li onClick={() => handleClick('Mudar para Material')}>Mudar para Material</li>
+            <li onClick={() => handleClick('Mudar para Cliente')}>
+              Mudar para Cliente
+              {activeMenu === 'cliente' && (
+                <ul>
+                  <li onClick={() => handleClick('Criar')}>Criar</li>
+                  <li onClick={() => handleClick(`Listar clientes`)}>Listar clientes</li>
+                </ul>
+              )}
+            </li>
+            <li onClick={() => handleClick('Mudar para Pedido')}>
+              Mudar para Pedido
+              {activeMenu === 'pedido' && (
+                <ul>
+                  <li onClick={() => handleClick('Criar')}>Criar</li>
+                  <li onClick={() => handleClick(`Listar pedidos`)}>Listar pedidos</li>
+                </ul>
+              )}
+            </li>
+            <li onClick={() => handleClick('Mudar para Funcionario')}>
+              Mudar para Funcionário
+              {activeMenu === 'funcionario' && (
+                <ul>
+                  <li onClick={() => handleClick('Criar')}>Criar</li>
+                  <li onClick={() => handleClick(`Listar funcionarios`)}>Listar funcionários</li>
+                </ul>
+              )}
+            </li>
+            <li onClick={() => handleClick('Mudar para Produto')}>
+              Mudar para Produto
+              {activeMenu === 'produto' && (
+                <ul>
+                  <li onClick={() => handleClick('Criar')}>Criar</li>
+                  <li onClick={() => handleClick(`Listar produtos`)}>Listar produtos</li>
+                </ul>
+              )}
+            </li>
+            <li onClick={() => handleClick('Mudar para Material')}>
+              Mudar para Materiais
+              {activeMenu === 'material' && (
+                <ul>
+                  <li onClick={() => handleClick('Criar')}>Criar</li>
+                  <li onClick={() => handleClick(`Listar Material`)}>Listar Materiais</li>
+                </ul>
+              )}
+            </li>
           </ul>
         </div>
         <div className={`column-right ${theme}`}>
           {rightColumnContent}
-          {dialogContent}
         </div>
       </div>
+      {dialogContent && (
+        <div className="dialog-overlay" onClick={() => setDialogContent(null)}>
+          {dialogContent}
+        </div>
+      )}
     </div>
   );
 }
